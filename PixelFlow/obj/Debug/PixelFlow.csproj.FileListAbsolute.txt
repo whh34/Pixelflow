@@ -12,3 +12,17 @@ C:\Users\rabid_000\PixelFlow\PixelFlow\obj\Debug\PixelFlow.OptionsBar.resources
 C:\Users\rabid_000\PixelFlow\PixelFlow\obj\Debug\PixelFlow.AnimationPane.resources
 C:\Users\rabid_000\PixelFlow\PixelFlow\obj\Debug\PixelFlow.AnimationPreview.resources
 C:\Users\rabid_000\PixelFlow\PixelFlow\obj\Debug\PixelFlow.csprojResolveAssemblyReference.cache
+C:\Users\Will\pixelflow\PixelFlow\bin\Debug\PixelFlow.exe.config
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.exe
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.pdb
+C:\Users\Will\pixelflow\PixelFlow\bin\Debug\PixelFlow.exe
+C:\Users\Will\pixelflow\PixelFlow\bin\Debug\PixelFlow.pdb
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.AnimationPane.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.AnimationPreview.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.DrawPane.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.MainWindow.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.OptionsBar.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.Properties.Resources.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.ToolbarPane.resources
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.csproj.GenerateResource.Cache
+C:\Users\Will\pixelflow\PixelFlow\obj\Debug\PixelFlow.csprojResolveAssemblyReference.cache
