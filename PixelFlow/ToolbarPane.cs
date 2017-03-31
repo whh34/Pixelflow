@@ -43,7 +43,12 @@ namespace PixelFlow
             primaryColorDialog.ShowDialog();
             mainWindow = (MainWindow)this.Parent; // in case the parent is not currently set
             mainWindow.GetDrawPane().SetPrimaryColor(primaryColorDialog.Color);
-            primaryColorSelector.BackColor = primaryColorDialog.Color;
+            SetPrimaryColorSelector(primaryColorDialog.Color);
+        }
+
+        public void SetPrimaryColorSelector(Color color)
+        {
+            primaryColorSelector.BackColor = color;
         }
 
         /*
@@ -55,7 +60,12 @@ namespace PixelFlow
             secondaryColorDialog.ShowDialog();
             mainWindow = (MainWindow)this.Parent; // in case the parent is not currently set
             mainWindow.GetDrawPane().SetSecondaryColor(secondaryColorDialog.Color);
-            secondaryColorSelector.BackColor = secondaryColorDialog.Color;
+            SetSecondaryColorSelector(secondaryColorDialog.Color);
+        }
+
+        public void SetSecondaryColorSelector(Color color)
+        {
+            secondaryColorSelector.BackColor = color;
         }
 
         /*
@@ -156,6 +166,18 @@ namespace PixelFlow
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            mainWindow = (MainWindow)this.Parent;
+            mainWindow.GetDrawPane().SetPrimaryAlpha((int)this.alpha1Value.Value);
+        }
+
+        private void alpha2Value_ValueChanged(object sender, EventArgs e)
+        {
+            mainWindow = (MainWindow)this.Parent;
+            mainWindow.GetDrawPane().SetSecondaryAlpha((int)this.alpha2Value.Value);
         }
     }
 }

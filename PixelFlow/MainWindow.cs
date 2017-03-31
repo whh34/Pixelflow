@@ -46,5 +46,10 @@ namespace PixelFlow
         {
             return this.animationPane1;
         }
+
+        private void optionsBar1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

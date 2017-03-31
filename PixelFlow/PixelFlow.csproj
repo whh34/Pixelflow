@@ -87,18 +87,23 @@
     </Compile>
     <EmbeddedResource Include="AnimationPane.resx">
       <DependentUpon>AnimationPane.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AnimationPreview.resx">
       <DependentUpon>AnimationPreview.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DrawPane.resx">
       <DependentUpon>DrawPane.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionsBar.resx">
       <DependentUpon>OptionsBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,6 +116,7 @@
     </Compile>
     <EmbeddedResource Include="ToolbarPane.resx">
       <DependentUpon>ToolbarPane.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

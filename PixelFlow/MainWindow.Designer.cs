@@ -74,6 +74,7 @@
             this.optionsBar1.Name = "optionsBar1";
             this.optionsBar1.Size = new System.Drawing.Size(1184, 66);
             this.optionsBar1.TabIndex = 5;
+            this.optionsBar1.Load += new System.EventHandler(this.optionsBar1_Load);
             // 
             // MainWindow
             // 

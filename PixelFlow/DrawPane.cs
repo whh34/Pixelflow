@@ -27,6 +27,8 @@ namespace PixelFlow
         private Color secondaryColor = Color.White;
         private Color actingPrimaryColor = Color.Black;
         private Color actingSecondaryColor = Color.White;
+        private int primaryAlpha = 255;
+        private int secondaryAlpha = 0;
         private int lineThickness = 1;
         private int scale = 1;
 
@@ -102,6 +104,16 @@ namespace PixelFlow
             lineThickness = thickness;
         }
 
+        public void SetPrimaryAlpha(int a)
+        {
+            primaryAlpha = a;
+        }
+
+        public void SetSecondaryAlpha(int a)
+        {
+            secondaryAlpha = a;
+        }
+
         private void DrawPane_MouseDown(object sender, MouseEventArgs e)
         {
             
@@ -111,13 +123,13 @@ namespace PixelFlow
 
             if (e.Button == MouseButtons.Left)
             {
-                actingPrimaryColor = primaryColor;
-                actingSecondaryColor = secondaryColor;
+                actingPrimaryColor = Color.FromArgb(primaryAlpha, primaryColor);
+                actingSecondaryColor = Color.FromArgb(secondaryAlpha, secondaryColor);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                actingPrimaryColor = secondaryColor;
-                actingSecondaryColor = primaryColor;   
+                actingPrimaryColor = Color.FromArgb(secondaryAlpha, secondaryColor);
+                actingSecondaryColor = Color.FromArgb(primaryAlpha, primaryColor);
             }
 
             if (tool == "pencil")
@@ -512,10 +524,12 @@ namespace PixelFlow
                 if (e.Button == MouseButtons.Left)
                 {
                     SetPrimaryColor(image.GetPixel(e.X, e.Y));
+                    mainWindow.GetToolbar().SetPrimaryColorSelector(image.GetPixel(e.X, e.Y));
                 }
                 if (e.Button == MouseButtons.Right)
                 {
                     SetSecondaryColor(image.GetPixel(e.X, e.Y));
+                    mainWindow.GetToolbar().SetSecondaryColorSelector(image.GetPixel(e.X, e.Y));
                 }
             }
         }

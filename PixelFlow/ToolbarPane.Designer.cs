@@ -43,6 +43,12 @@
             this.secondaryColorSelector = new System.Windows.Forms.Button();
             this.secondaryColorDialog = new System.Windows.Forms.ColorDialog();
             this.toolsToolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.alpha1Value = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.alpha2Value = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.alpha1Value)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alpha2Value)).BeginInit();
             this.SuspendLayout();
             // 
             // pencilTool
@@ -174,12 +180,76 @@
             this.toolsToolTips.Tag = "";
             this.toolsToolTips.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
+            // alpha1Value
+            // 
+            this.alpha1Value.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.alpha1Value.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.alpha1Value.Location = new System.Drawing.Point(57, 338);
+            this.alpha1Value.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.alpha1Value.Name = "alpha1Value";
+            this.alpha1Value.Size = new System.Drawing.Size(49, 20);
+            this.alpha1Value.TabIndex = 10;
+            this.alpha1Value.Value = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.alpha1Value.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Location = new System.Drawing.Point(4, 338);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(49, 20);
+            this.textBox1.TabIndex = 11;
+            this.textBox1.Text = "Alpha 1";
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox2.Location = new System.Drawing.Point(4, 365);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(49, 20);
+            this.textBox2.TabIndex = 12;
+            this.textBox2.Text = "Alpha 2";
+            // 
+            // alpha2Value
+            // 
+            this.alpha2Value.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.alpha2Value.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.alpha2Value.Location = new System.Drawing.Point(57, 365);
+            this.alpha2Value.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.alpha2Value.Name = "alpha2Value";
+            this.alpha2Value.Size = new System.Drawing.Size(49, 20);
+            this.alpha2Value.TabIndex = 13;
+            this.alpha2Value.Value = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.alpha2Value.ValueChanged += new System.EventHandler(this.alpha2Value_ValueChanged);
+            // 
             // ToolbarPane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.alpha2Value);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.alpha1Value);
             this.Controls.Add(this.primaryColorSelector);
             this.Controls.Add(this.secondaryColorSelector);
             this.Controls.Add(this.lineTool);
@@ -192,7 +262,10 @@
             this.Controls.Add(this.pencilTool);
             this.Name = "ToolbarPane";
             this.Size = new System.Drawing.Size(112, 600);
+            ((System.ComponentModel.ISupportInitialize)(this.alpha1Value)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.alpha2Value)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -211,5 +284,9 @@
         private System.Windows.Forms.Button secondaryColorSelector;
         private System.Windows.Forms.ColorDialog secondaryColorDialog;
         private System.Windows.Forms.ToolTip toolsToolTips;
+        private System.Windows.Forms.NumericUpDown alpha1Value;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.NumericUpDown alpha2Value;
     }
 }
