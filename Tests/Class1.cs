@@ -24,5 +24,11 @@ namespace Tests
         {
             AreEqual(0, 0);
         }
+
+        [Test]
+        public void Ermagherd()
+        {
+            AreNotEqual(1, 0);
+        }
     }
 }
