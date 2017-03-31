@@ -18,5 +18,11 @@ namespace Tests
             TestClass.DoSomething();
             AreEqual(0, 1);
         }
+
+        [Test]
+        public void DoSomethingElse()
+        {
+            AreEqual(0, 0);
+        }
     }
 }

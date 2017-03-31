@@ -21,6 +21,11 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+
+# Test results
+CoverageResults/
+TestResults/
+
 x64/
 x86/
 bld/
