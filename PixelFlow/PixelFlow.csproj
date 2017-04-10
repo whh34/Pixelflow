@@ -64,6 +64,18 @@
     <Compile Include="DrawPane.Designer.cs">
       <DependentUpon>DrawPane.cs</DependentUpon>
     </Compile>
+    <Compile Include="FramesPreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FramesPreview.Designer.cs">
+      <DependentUpon>FramesPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayersPreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LayersPreview.Designer.cs">
+      <DependentUpon>LayersPreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +105,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DrawPane.resx">
       <DependentUpon>DrawPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FramesPreview.resx">
+      <DependentUpon>FramesPreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayersPreview.resx">
+      <DependentUpon>LayersPreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
