@@ -84,8 +84,9 @@ namespace PixelFlow
             {
                 currentHistory = 0;
             }
+            //drawspace.ScaleTransform(scale, scale);
             DisplayImage(history[currentHistory]);
-
+            
             SetScale(scale);
 
             Debug.WriteLine(history);
@@ -146,6 +147,9 @@ namespace PixelFlow
             }
         }*/
 
+        /*
+         * Sets the color of the pixel at the input point to the input color
+         */
         public void ColorPixel(int x, int y, Color color)
         {
             // draw the pixel to the screen and the bitmap representation
@@ -157,6 +161,33 @@ namespace PixelFlow
             // tell the animator to update this frame
             mainWindow = (MainWindow)this.Parent;
             mainWindow.GetAnimationPane().GetAnimationPreview().animation[frame - 1] = image;
+        }
+
+
+        /*
+         * Overload that takes a point instead of 2 ints
+         */
+        public void ColorPixel(Point p, Color color)
+        {
+            ColorPixel(p.X, p.Y, color);
+        }
+
+
+        /*
+         * Gets the color at the specified point
+         */
+        public Color GetPixel(int x, int y)
+        {
+            return image.GetPixel(x, y);
+        }
+
+
+        /*
+         * Overload that takes a point instead of 2 ints
+         */ 
+        public Color GetPixel(Point p)
+        {
+            return GetPixel(p.X, p.Y);
         }
         
 
@@ -529,21 +560,17 @@ namespace PixelFlow
         private void DrawRectangleUp(MouseEventArgs e)
         {
             Brush brush = new SolidBrush(actingPrimaryColor);
-            if (drawX < e.X && drawY < e.Y)
+            int minX = Math.Min(drawX, e.X) / scale;
+            int maxX = Math.Max(drawX, e.X) / scale;
+            int minY = Math.Min(drawY, e.Y) / scale;
+            int maxY = Math.Max(drawY, e.Y) / scale;
+
+            for (int x = minX; x < maxX; x++)
             {
-                drawspace.FillRectangle(brush, drawX / scale, drawY / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX < e.X && drawY > e.Y)
-            {
-                drawspace.FillRectangle(brush, drawX / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX > e.X && drawY < e.Y)
-            {
-                drawspace.FillRectangle(brush, e.X / scale, drawY / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX > e.X && drawY > e.Y)
-            {
-                drawspace.FillRectangle(brush, e.X / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
+                for (int y = minY; y < maxY; y++)
+                {
+                    ColorPixel(x, y, actingPrimaryColor);
+                }
             }
 
             //FixPixels();
