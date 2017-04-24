@@ -38,6 +38,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.Name = "AnimationPreview";
             this.Size = new System.Drawing.Size(300, 300);
+            this.Load += new System.EventHandler(this.AnimationPreview_Load);
             this.ResumeLayout(false);
 
         }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace PixelFlow
 {
@@ -28,25 +29,81 @@ namespace PixelFlow
         private Color actingPrimaryColor = Color.Black;
         private Color actingSecondaryColor = Color.White;
         private int primaryAlpha = 255;
-        private int secondaryAlpha = 0;
+        private int secondaryAlpha = 255;
         private int lineThickness = 1;
         private int scale = 1;
+
+        private List<Bitmap> history;
+        private int currentHistory;
+
+        public int frame = 1; // the frame of the animation this will act as
 
         public DrawPane()
         {
             InitializeComponent();
+
+            this.image = new Bitmap(32, 32);
+            this.Size = new Size(320, 320);  // temporary, will resize with scale later
+            //this.scale = 10;
 
             mainWindow = (MainWindow)this.Parent;
 
             this.drawspace = this.CreateGraphics();
             //this.pen = new Pen(primaryColor, lineThickness); // apparently this doesn't work because you need a new pen every time you draw. idk.
 
-            this.image = new Bitmap(32, 32);
+            frame = 1;//mainWindow.GetAnimationPane().GetAnimationPreview().animation.Count + 1;
+
+            history = new List<Bitmap>();
+            history.Add(image);
+        }
+
+        public DrawPane(Bitmap newImage)
+        {
+            InitializeComponent();
+            this.image = newImage;
+
+        } 
+
+        public void DisplayImage(Bitmap newImage)
+        {
+            this.drawspace = this.CreateGraphics();
+            drawspace.DrawImage(image, new PointF(0, 0));
         }
 
         private void DrawPane_Load(object sender, EventArgs e)
         {
+            //DisplayImage(image);
+            //scale = 10;
+        }
 
+        public void Undo()
+        {
+            this.drawspace.Clear(Color.White);
+            currentHistory--;
+            if (currentHistory < 0)
+            {
+                currentHistory = 0;
+            }
+            DisplayImage(history[currentHistory]);
+
+            SetScale(scale);
+
+            Debug.WriteLine(history);
+        }
+
+        public void Redo()
+        {
+            this.drawspace.Clear(Color.White);
+            currentHistory++;
+            if (currentHistory > history.Count - 1)
+            {
+                currentHistory = history.Count - 1;
+            }
+            DisplayImage(history[currentHistory]);
+
+            SetScale(scale);
+
+            Debug.WriteLine(history);
         }
 
         public void SetScale(int newScale)
@@ -58,7 +115,7 @@ namespace PixelFlow
             
         }
 
-        public void FixPixels()
+        /*public void FixPixels()
         {
             // loop through every n pixels in the drawspace, where n is scale
             for (int x = 0; x < (int)drawspace.DpiX; x += scale)
@@ -74,9 +131,9 @@ namespace PixelFlow
                     
                 }
             }
-        }
+        }*/
 
-        public void ScanAndRecolor(int x, int y, int scale)
+        /*public void ScanAndRecolor(int x, int y, int scale)
         {
             for (int i = x; i < x + scale; i++)
             {
@@ -87,6 +144,30 @@ namespace PixelFlow
                     drawspace.FillRectangle(brush, x, y, scale, scale);
                 }
             }
+        }*/
+
+        public void ColorPixel(int x, int y, Color color)
+        {
+            // draw the pixel to the screen and the bitmap representation
+            Brush brush = new SolidBrush(color);
+            drawspace.FillRectangle(brush, x, y, lineThickness, lineThickness);
+            image.SetPixel(x, y, color);
+            brush.Dispose();
+
+            // tell the animator to update this frame
+            mainWindow = (MainWindow)this.Parent;
+            mainWindow.GetAnimationPane().GetAnimationPreview().animation[frame - 1] = image;
+        }
+        
+
+        public Bitmap GetImage()
+        {
+            return this.image;
+        }
+
+        public void SetImage(Bitmap image)
+        {
+            this.image = image;
         }
 
         public void SetPrimaryColor(Color c)
@@ -258,6 +339,15 @@ namespace PixelFlow
             }
 
             dragable = false;
+
+            // update history
+            if (currentHistory != history.Count - 1)
+            {
+                history.RemoveRange(currentHistory, history.Count - 1);
+            }
+
+            history.Add((Bitmap)image.Clone());
+            currentHistory = history.Count - 1;
         }
 
 
@@ -267,29 +357,26 @@ namespace PixelFlow
 
         private void DrawPencilDown(MouseEventArgs e)
         {
-            Brush brush = new SolidBrush(actingPrimaryColor);
+            /*Brush brush = new SolidBrush(actingPrimaryColor);
             drawspace.FillRectangle(brush, e.X / scale, e.Y / scale, lineThickness, lineThickness);
+            image.SetPixel(e.X / scale, e.Y / scale, actingPrimaryColor);*/
+            ColorPixel(e.X / scale, e.Y / scale, actingPrimaryColor);
             drawX = e.X;
             drawY = e.Y;
-            brush.Dispose();
-            FixPixels();
+            //brush.Dispose();
+            //FixPixels();
         }
 
         private void DrawPencilMove(MouseEventArgs e)
         {
-            Pen pen = new Pen(actingPrimaryColor, lineThickness);
             
             if (dragable == true)
             {
-                //drawspace.DrawLine(pen, drawX / scale, drawY / scale, e.X / scale, e.Y / scale);  // causes plus signs instead of solid lines because DrawLine makes a flat area that covers stuff instead of a rectangle.
-
                 DrawLineUp(e);
                 drawX = e.X;
                 drawY = e.Y;
-
             }
-            pen.Dispose();
-            FixPixels();
+            //FixPixels();
         }
         private void DrawPencilUp(MouseEventArgs e)
         {
@@ -316,7 +403,7 @@ namespace PixelFlow
             /*Pen pen = new Pen(actingPrimaryColor, lineThickness);
             drawspace.DrawLine(pen, drawX / scale, drawY / scale, e.X / scale, e.Y / scale);*/
 
-            Brush brush = new SolidBrush(actingPrimaryColor);
+            //Brush brush = new SolidBrush(actingPrimaryColor);
 
             int sX = drawX / scale;
             int sY = drawY / scale;
@@ -369,16 +456,20 @@ namespace PixelFlow
             float x = sX;
             float y = sY;
 
-            drawspace.FillRectangle(brush, sX, sY, lineThickness, lineThickness);
+            //drawspace.FillRectangle(brush, sX, sY, lineThickness, lineThickness);
+            //image.SetPixel(sX, sY, actingPrimaryColor);
+            ColorPixel(sX, sY, actingPrimaryColor);
             for (int i = 0; i < steps; i++)
             {
                 x += dx;
                 y += dy;
-                drawspace.FillRectangle(brush, (int)(x + 0.5), (int)(y + 0.5), lineThickness, lineThickness);
+                //drawspace.FillRectangle(brush, (int)(x + 0.5), (int)(y + 0.5), lineThickness, lineThickness);
+                //image.SetPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
+                ColorPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
             }
 
             //pen.dispose();
-            brush.Dispose();
+            //brush.Dispose();
             //FixPixels();
         }
 
@@ -417,7 +508,7 @@ namespace PixelFlow
                 drawspace.FillEllipse(brush, e.X / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
             }
 
-            FixPixels();
+            //FixPixels();
         }
 
 
@@ -455,7 +546,7 @@ namespace PixelFlow
                 drawspace.FillRectangle(brush, e.X / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
             }
 
-            FixPixels();
+            //FixPixels();
         }
 
 
@@ -483,7 +574,7 @@ namespace PixelFlow
 
             drawspace.FillRectangle(brush, e.X / scale, e.Y / scale, 100, 100);
 
-            FixPixels();
+            //FixPixels();
         }
 
 

@@ -43,5 +43,17 @@ namespace PixelFlow
         {
 
         }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            mainWindow = (MainWindow)this.Parent;
+            mainWindow.GetDrawPane().Undo();
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            mainWindow = (MainWindow)this.Parent;
+            mainWindow.GetDrawPane().Redo();
+        }
     }
 }

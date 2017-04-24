@@ -64,17 +64,17 @@
     <Compile Include="DrawPane.Designer.cs">
       <DependentUpon>DrawPane.cs</DependentUpon>
     </Compile>
-    <Compile Include="FramesPreview.cs">
+    <Compile Include="FramePreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FramesPreview.Designer.cs">
-      <DependentUpon>FramesPreview.cs</DependentUpon>
+    <Compile Include="FramePreview.Designer.cs">
+      <DependentUpon>FramePreview.cs</DependentUpon>
     </Compile>
-    <Compile Include="LayersPreview.cs">
+    <Compile Include="LayerPreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LayersPreview.Designer.cs">
-      <DependentUpon>LayersPreview.cs</DependentUpon>
+    <Compile Include="LayerPreview.Designer.cs">
+      <DependentUpon>LayerPreview.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -106,11 +106,11 @@
     <EmbeddedResource Include="DrawPane.resx">
       <DependentUpon>DrawPane.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FramesPreview.resx">
-      <DependentUpon>FramesPreview.cs</DependentUpon>
+    <EmbeddedResource Include="FramePreview.resx">
+      <DependentUpon>FramePreview.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LayersPreview.resx">
-      <DependentUpon>LayersPreview.cs</DependentUpon>
+    <EmbeddedResource Include="LayerPreview.resx">
+      <DependentUpon>LayerPreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

@@ -62,7 +62,7 @@
             this.drawPane1.Location = new System.Drawing.Point(132, 74);
             this.drawPane1.Margin = new System.Windows.Forms.Padding(0);
             this.drawPane1.Name = "drawPane1";
-            this.drawPane1.Size = new System.Drawing.Size(600, 600);
+            this.drawPane1.Size = new System.Drawing.Size(320, 320);
             this.drawPane1.TabIndex = 3;
             // 
             // optionsBar1
@@ -89,6 +89,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 720);
             this.Name = "MainWindow";
             this.Text = "PixelFlow";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.ResumeLayout(false);
 
         }

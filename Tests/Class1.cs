@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using PixelFlow;
+// PixelFlow;
 using static NUnit.Framework.Assert;
 
 namespace Tests
@@ -15,7 +15,7 @@ namespace Tests
         [Test]
         public void DoSomethingTest()
         {
-            TestClass.DoSomething();
+            //TestClass.DoSomething();
             AreEqual(0, 1);
         }
 

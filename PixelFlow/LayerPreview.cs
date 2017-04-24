@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PixelFlow
 {
-    public partial class FramesPreview : UserControl
+    public partial class LayerPreview : UserControl
     {
-        public FramesPreview()
+        public LayerPreview()
         {
             InitializeComponent();
         }

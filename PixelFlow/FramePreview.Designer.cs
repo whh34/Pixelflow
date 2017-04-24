@@ -1,6 +1,6 @@
 ﻿namespace PixelFlow
 {
-    partial class FramesPreview
+    partial class FramePreview
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // FramesPreview
+            // FramePreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Name = "FramesPreview";
-            this.Size = new System.Drawing.Size(388, 120);
+            this.Name = "FramePreview";
+            this.Size = new System.Drawing.Size(390, 120);
             this.ResumeLayout(false);
 
         }

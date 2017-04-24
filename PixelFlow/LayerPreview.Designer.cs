@@ -1,6 +1,6 @@
 ﻿namespace PixelFlow
 {
-    partial class LayersPreview
+    partial class LayerPreview
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // LayersPreview
+            // LayerPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Name = "LayersPreview";
+            this.Name = "LayerPreview";
             this.Size = new System.Drawing.Size(93, 350);
             this.ResumeLayout(false);
 
