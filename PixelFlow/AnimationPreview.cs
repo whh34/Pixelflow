@@ -39,7 +39,7 @@ namespace PixelFlow
 
         private void AnimationPreview_Load(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent.Parent;
+            mainWindow = (MainWindow)Parent.Parent;
             animation.Add(mainWindow.GetDrawPane().GetImage());
 
             animator = new System.Threading.Thread(Play);

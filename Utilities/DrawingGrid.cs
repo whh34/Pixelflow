@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Windows.Media.Imaging;
 
 namespace Utilities
 {
@@ -31,6 +33,9 @@ namespace Utilities
         }
 
         public GridCell[,] Grid;
+        private int _width;
+        private int _height;
+        public Size size { get; }
         private int _Scale;
         public int Scale
         {
@@ -44,6 +49,7 @@ namespace Utilities
         // Constructor for DrawingGrid
         public DrawingGrid(int sizeX, int sizeY, int scale)
         {
+            size = new Size(sizeX, sizeY);
             Grid = new GridCell[sizeX, sizeY];
             for (int x = 0; x < sizeX; x++)
             {
@@ -57,13 +63,13 @@ namespace Utilities
         // Initializes a new display bitmap and corresponding graphics object
         private void UpdateDisplayMap()
         {
-            DisplayMap = new Bitmap(Grid.GetLength(0) * Scale, Grid.GetLength(1) * Scale);
+            DisplayMap = new Bitmap(size.Width * Scale, size.Height * Scale);
             DisplayGraphics = Graphics.FromImage(DisplayMap);
             //DisplayGraphics.CompositingMode = CompositingMode.SourceCopy;
 
-            for (int x = 0; x < Grid.GetLength(0); x++)
+            for (int x = 0; x < size.Width; x++)
             {
-                for (int y = 0; y < Grid.GetLength(1); y++)
+                for (int y = 0; y < size.Height; y++)
                 {
                     SolidBrush brush = new SolidBrush(Grid[x, y].color);
                     DisplayGraphics.FillRectangle(brush, x * Scale, y * Scale, Scale, Scale);
@@ -90,12 +96,12 @@ namespace Utilities
         // Creates a Bitmap image of the current drawing at a specified scale
         public Bitmap CreateImage(int scale)
         {
-            Bitmap b = new Bitmap(Grid.GetLength(0) * scale, Grid.GetLength(1) * scale);
+            Bitmap b = new Bitmap(size.Width * scale, size.Height * scale);
             Graphics bGraphics = Graphics.FromImage(b);
 
-            for (int x = 0; x < Grid.GetLength(0); x++)
+            for (int x = 0; x < size.Width; x++)
             {
-                for (int y = 0; y < Grid.GetLength(1); y++)
+                for (int y = 0; y < size.Height; y++)
                 {
                     SolidBrush brush = new SolidBrush(Grid[x, y].color);
                     bGraphics.FillRectangle(brush, x * scale, y * scale, scale, scale);
@@ -104,6 +110,17 @@ namespace Utilities
             }
 
             return b;
+        }
+
+        // Creates a BitmapSource object from the current drawing
+        public BitmapSource CreateSource(int scale)
+        {
+            Bitmap temp = CreateImage(scale);
+            var bitmapData = temp.LockBits(new Rectangle(0, 0, temp.Width, temp.Height), ImageLockMode.ReadOnly, temp.PixelFormat);
+            var bitmapSource = BitmapSource.Create(bitmapData.Width, bitmapData.Height, 96, 96, System.Windows.Media.PixelFormats.Bgra32, null, bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
+
+            temp.UnlockBits(bitmapData);
+            return bitmapSource;
         }
     }
 }
