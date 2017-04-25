@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using Utilities;
 
 namespace PixelFlow
 {
@@ -16,13 +17,14 @@ namespace PixelFlow
     {
         private MainWindow mainWindow;
 
-        private Bitmap image;
+        //private Bitmap image;
+        public DrawingGrid Grid;
 
         private bool dragable = false;
         private int drawX;
         private int drawY;
 
-        private Graphics drawspace;
+        //private Graphics drawspace;
         //private Pen pen;
         private Color primaryColor = Color.Black;
         private Color secondaryColor = Color.White;
@@ -31,7 +33,8 @@ namespace PixelFlow
         private int primaryAlpha = 255;
         private int secondaryAlpha = 255;
         private int lineThickness = 1;
-        private int scale = 1;
+        private int scale = 10;
+        private Size size;
 
         private List<Bitmap> history;
         private int currentHistory;
@@ -41,33 +44,42 @@ namespace PixelFlow
         public DrawPane()
         {
             InitializeComponent();
+            size = new Size(32, 32);
 
-            this.image = new Bitmap(32, 32);
-            this.Size = new Size(320, 320);  // temporary, will resize with scale later
+            //this.image = new Bitmap(32, 32);
+            Grid = new DrawingGrid(size.Width, size.Height, scale);
+            this.Size = new Size(size.Width * scale, size.Height * scale);  // temporary, will resize with scale later
             //this.scale = 10;
 
             mainWindow = (MainWindow)this.Parent;
 
-            this.drawspace = this.CreateGraphics();
+            //this.drawspace = this.CreateGraphics();
             //this.pen = new Pen(primaryColor, lineThickness); // apparently this doesn't work because you need a new pen every time you draw. idk.
 
             frame = 1;//mainWindow.GetAnimationPane().GetAnimationPreview().animation.Count + 1;
 
             history = new List<Bitmap>();
-            history.Add(image);
+            history.Add(Grid.DisplayMap);
         }
 
+        /*
         public DrawPane(Bitmap newImage)
         {
             InitializeComponent();
             this.image = newImage;
 
-        } 
+        } */
 
         public void DisplayImage(Bitmap newImage)
         {
-            this.drawspace = this.CreateGraphics();
-            drawspace.DrawImage(image, new PointF(0, 0));
+            Graphics g = this.CreateGraphics();
+            g.DrawImage(newImage, 0, 0, newImage.Width, newImage.Height);
+        }
+
+        public void DisplayImage()
+        {
+            Graphics g = CreateGraphics();
+            g.DrawImage(Grid.DisplayMap, 0, 0, Grid.DisplayMap.Width, Grid.DisplayMap.Height);
         }
 
         private void DrawPane_Load(object sender, EventArgs e)
@@ -78,7 +90,7 @@ namespace PixelFlow
 
         public void Undo()
         {
-            this.drawspace.Clear(Color.White);
+            //this.drawspace.Clear(Color.White);
             currentHistory--;
             if (currentHistory < 0)
             {
@@ -94,7 +106,7 @@ namespace PixelFlow
 
         public void Redo()
         {
-            this.drawspace.Clear(Color.White);
+            //this.drawspace.Clear(Color.White);
             currentHistory++;
             if (currentHistory > history.Count - 1)
             {
@@ -109,11 +121,10 @@ namespace PixelFlow
 
         public void SetScale(int newScale)
         {
-            drawspace.ScaleTransform((float)newScale / (float)scale, (float)newScale / (float)scale); // close, but causes weird problems with what the pen tool actually does.
-            //drawspace.PageUnit = GraphicsUnit.Pixel;
-            //drawspace.PageUnit = (System.Drawing.GraphicsUnit)((float)newScale / (float)scale);
-            this.scale = newScale;
-            
+            Grid.Scale = newScale;
+            scale = newScale;
+            this.Size = new Size(size.Width * newScale, size.Height * newScale); // this is kind of cheesy currently, we might want to maintain the true image size somewhere in here
+            DisplayImage();
         }
 
         /*public void FixPixels()
@@ -152,15 +163,19 @@ namespace PixelFlow
          */
         public void ColorPixel(int x, int y, Color color)
         {
-            // draw the pixel to the screen and the bitmap representation
-            Brush brush = new SolidBrush(color);
-            drawspace.FillRectangle(brush, x, y, lineThickness, lineThickness);
-            image.SetPixel(x, y, color);
-            brush.Dispose();
+            try
+            {
+                // Color a pixel on the grid representation
+                Grid.DrawToGrid(x, y, color);
+                //DisplayImage();
 
-            // tell the animator to update this frame
-            mainWindow = (MainWindow)this.Parent;
-            mainWindow.GetAnimationPane().GetAnimationPreview().animation[frame - 1] = image;
+                // tell the animator to update this frame
+                ((MainWindow)Parent).GetAnimationPane().GetAnimationPreview().animation[frame - 1] = Grid.DisplayMap;
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                // no op
+            }
         }
 
 
@@ -178,7 +193,7 @@ namespace PixelFlow
          */
         public Color GetPixel(int x, int y)
         {
-            return image.GetPixel(x, y);
+            return Grid.GetCell(x, y);
         }
 
 
@@ -190,16 +205,18 @@ namespace PixelFlow
             return GetPixel(p.X, p.Y);
         }
         
-
+        
         public Bitmap GetImage()
         {
-            return this.image;
+            return Grid.DisplayMap;
+            // I'm not certain that this will do what we want
         }
 
         public void SetImage(Bitmap image)
         {
-            this.image = image;
+            // This might need some work...
         }
+        
 
         public void SetPrimaryColor(Color c)
         {
@@ -377,7 +394,7 @@ namespace PixelFlow
                 history.RemoveRange(currentHistory, history.Count - 1);
             }
 
-            history.Add((Bitmap)image.Clone());
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
             currentHistory = history.Count - 1;
         }
 
@@ -394,6 +411,7 @@ namespace PixelFlow
             ColorPixel(e.X / scale, e.Y / scale, actingPrimaryColor);
             drawX = e.X;
             drawY = e.Y;
+            DisplayImage();
             //brush.Dispose();
             //FixPixels();
         }
@@ -406,6 +424,7 @@ namespace PixelFlow
                 DrawLineUp(e);
                 drawX = e.X;
                 drawY = e.Y;
+                DisplayImage();
             }
             //FixPixels();
         }
@@ -499,6 +518,7 @@ namespace PixelFlow
                 ColorPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
             }
 
+            DisplayImage();
             //pen.dispose();
             //brush.Dispose();
             //FixPixels();
@@ -521,6 +541,8 @@ namespace PixelFlow
         }
         private void DrawCircleUp(MouseEventArgs e)
         {
+            /* Yeah we're gonna have to redo this in terms of ColorPixel()
+             * 
             Brush brush = new SolidBrush(actingPrimaryColor);
             if (drawX < e.X && drawY < e.Y)
             {
@@ -540,6 +562,7 @@ namespace PixelFlow
             }
 
             //FixPixels();
+            */ 
         }
 
 
@@ -573,6 +596,7 @@ namespace PixelFlow
                 }
             }
 
+            DisplayImage();
             //FixPixels();
         }
 
@@ -594,14 +618,17 @@ namespace PixelFlow
 
         private void DrawGradientUp(MouseEventArgs e)
         {
-            /*Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush(new Point(drawX, drawY), new Point(e.X, e.Y), primaryColor, secondaryColor);
-            drawspace.FillRectangle(brush, e.Y, e.X, 30, 30);*/
+            /* This needs to be redone to work with the Grid object
+             * 
+            Brush brush = new System.Drawing.Drawing2D.LinearGradientBrush(new Point(drawX, drawY), new Point(e.X, e.Y), primaryColor, secondaryColor);
+            drawspace.FillRectangle(brush, e.Y, e.X, 30, 30);
 
             LinearGradientBrush brush = new LinearGradientBrush(new Point(drawX, drawY), new Point(e.X, e.Y + 1), actingPrimaryColor, actingSecondaryColor); // in case of OutOfMemory errors (don't make a gradient that just goes up 1)
 
             drawspace.FillRectangle(brush, e.X / scale, e.Y / scale, 100, 100);
 
             //FixPixels();
+            */
         }
 
 
@@ -635,6 +662,8 @@ namespace PixelFlow
 
         private void DrawEyedropperUp(MouseEventArgs e)
         {
+            /* I don't really want to mess with this at the moment, but it needs to be slightly changed to work with the grid object
+             * 
             Bitmap image = new Bitmap((int)drawspace.DpiX, (int)drawspace.DpiY, drawspace);
 
             if (e.X >= 0 && e.Y >= 0)
@@ -650,6 +679,7 @@ namespace PixelFlow
                     mainWindow.GetToolbar().SetSecondaryColorSelector(image.GetPixel(e.X, e.Y));
                 }
             }
+            */
         }
     }
 }

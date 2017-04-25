@@ -14,7 +14,7 @@ namespace Utilities
         {
             public Color color { get; set; }
 
-            public GridCell(int r = 255, int g = 255, int b = 255, int a = 0)
+            public GridCell(int r = 255, int g = 255, int b = 255, int a = 255)
             {
                 color = Color.FromArgb(a, r, g, b);
             }
@@ -22,6 +22,11 @@ namespace Utilities
             public GridCell(Color color)
             {
                 this.color = color;
+            }
+
+            public GridCell()
+            {
+                this.color = Color.White;
             }
         }
 
@@ -40,14 +45,21 @@ namespace Utilities
         public DrawingGrid(int sizeX, int sizeY, int scale)
         {
             Grid = new GridCell[sizeX, sizeY];
+            for (int x = 0; x < sizeX; x++)
+            {
+                for (int y = 0; y < sizeY; y++)
+                    Grid[x, y] = new GridCell();
+            }
+
             Scale = scale;
         }
 
         // Initializes a new display bitmap and corresponding graphics object
-        public void UpdateDisplayMap()
+        private void UpdateDisplayMap()
         {
             DisplayMap = new Bitmap(Grid.GetLength(0) * Scale, Grid.GetLength(1) * Scale);
             DisplayGraphics = Graphics.FromImage(DisplayMap);
+            //DisplayGraphics.CompositingMode = CompositingMode.SourceCopy;
 
             for (int x = 0; x < Grid.GetLength(0); x++)
             {
