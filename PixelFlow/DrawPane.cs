@@ -644,7 +644,7 @@ namespace PixelFlow
             HashSet<Point> inFill = new HashSet<Point>();
             Queue<Point> openList = new Queue<Point>();
             openList.Enqueue(new Point(sX, sY));
-            Color color = image.GetPixel(sX, sY);
+            Color color = GetPixel(sX, sY);
             while (openList.Count > 0)
             {
 
@@ -652,13 +652,13 @@ namespace PixelFlow
                 int x = active.X;
                 int y = active.Y;
                 ColorPixel(x, y, actingPrimaryColor);
-                int xMax = 9999;
-                int yMax = 9999;
+                int xMax = size.Width;
+                int yMax = size.Height;
                 Point[] points = { new Point(x + 1, y), new Point(x, y + 1), new Point(x - 1, y), new Point(x, y - 1) };
                 foreach (Point p in points)
                 {
                     if (p.X < xMax && p.Y < yMax && p.X >= 0 && p.Y >= 0 && !inFill.Contains(p) && !openList.Contains(p)
-                        && image.GetPixel(p.X, p.Y).Equals(color))
+                        && GetPixel(p.X, p.Y).Equals(color))
                     {
                         openList.Enqueue(p);
                     }
@@ -666,6 +666,7 @@ namespace PixelFlow
 
                 inFill.Add(active);
             }
+            DisplayImage();
         }
 
 
