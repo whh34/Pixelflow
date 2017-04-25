@@ -51,5 +51,19 @@ namespace PixelFlow
         {
 
         }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            // this is necessary to close the animating thread. There's probably a better way
+
+            this.GetAnimationPane().GetAnimationPreview().animating = false;
+            this.GetAnimationPane().GetAnimationPreview().animator.Interrupt();
+            this.GetAnimationPane().GetAnimationPreview().animator.Join();
+        }
     }
 }

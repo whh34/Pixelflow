@@ -33,11 +33,17 @@
             this.playPause = new System.Windows.Forms.Button();
             this.stepBackward = new System.Windows.Forms.Button();
             this.stepForward = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.frameRate = new System.Windows.Forms.NumericUpDown();
             this.frameRateText = new System.Windows.Forms.TextBox();
             this.animationToolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.addFrame = new System.Windows.Forms.Button();
+            this.frame = new System.Windows.Forms.NumericUpDown();
+            this.frameText = new System.Windows.Forms.TextBox();
+            this.layerPreview1 = new PixelFlow.LayerPreview();
+            this.framePreview1 = new PixelFlow.FramePreview();
             this.animationPreview1 = new PixelFlow.AnimationPreview();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.frameRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.frame)).BeginInit();
             this.SuspendLayout();
             // 
             // playPause
@@ -50,6 +56,7 @@
             this.playPause.TabIndex = 1;
             this.animationToolTips.SetToolTip(this.playPause, "Play or Pause the animation");
             this.playPause.UseVisualStyleBackColor = true;
+            this.playPause.Click += new System.EventHandler(this.playPause_Click);
             // 
             // stepBackward
             // 
@@ -61,6 +68,7 @@
             this.stepBackward.TabIndex = 2;
             this.animationToolTips.SetToolTip(this.stepBackward, "Step backward one frame");
             this.stepBackward.UseVisualStyleBackColor = true;
+            this.stepBackward.Click += new System.EventHandler(this.stepBackward_Click);
             // 
             // stepForward
             // 
@@ -72,21 +80,84 @@
             this.stepForward.TabIndex = 3;
             this.animationToolTips.SetToolTip(this.stepForward, "Step forward one frame");
             this.stepForward.UseVisualStyleBackColor = true;
+            this.stepForward.Click += new System.EventHandler(this.stepForward_Click);
             // 
-            // numericUpDown1
+            // frameRate
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(357, 18);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown1.TabIndex = 4;
+            this.frameRate.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.frameRate.Location = new System.Drawing.Point(357, 18);
+            this.frameRate.Name = "frameRate";
+            this.frameRate.Size = new System.Drawing.Size(56, 20);
+            this.frameRate.TabIndex = 4;
+            this.frameRate.ValueChanged += new System.EventHandler(this.frameRate_ValueChanged);
             // 
             // frameRateText
             // 
+            this.frameRateText.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.frameRateText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.frameRateText.Location = new System.Drawing.Point(286, 18);
             this.frameRateText.Name = "frameRateText";
+            this.frameRateText.ReadOnly = true;
             this.frameRateText.Size = new System.Drawing.Size(65, 20);
             this.frameRateText.TabIndex = 5;
             this.frameRateText.Text = "Frame Rate";
+            // 
+            // addFrame
+            // 
+            this.addFrame.Location = new System.Drawing.Point(404, 400);
+            this.addFrame.Name = "addFrame";
+            this.addFrame.Size = new System.Drawing.Size(25, 120);
+            this.addFrame.TabIndex = 8;
+            this.addFrame.Text = "add";
+            this.addFrame.UseVisualStyleBackColor = true;
+            this.addFrame.Click += new System.EventHandler(this.addFrame_Click);
+            // 
+            // frame
+            // 
+            this.frame.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.frame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.frame.Location = new System.Drawing.Point(340, 526);
+            this.frame.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.frame.Name = "frame";
+            this.frame.Size = new System.Drawing.Size(60, 20);
+            this.frame.TabIndex = 9;
+            this.frame.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.frame.ValueChanged += new System.EventHandler(this.frame_ValueChanged);
+            // 
+            // frameText
+            // 
+            this.frameText.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.frameText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.frameText.Location = new System.Drawing.Point(288, 526);
+            this.frameText.Name = "frameText";
+            this.frameText.ReadOnly = true;
+            this.frameText.Size = new System.Drawing.Size(46, 20);
+            this.frameText.TabIndex = 10;
+            this.frameText.Text = "Frame";
+            // 
+            // layerPreview1
+            // 
+            this.layerPreview1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.layerPreview1.Location = new System.Drawing.Point(10, 44);
+            this.layerPreview1.Name = "layerPreview1";
+            this.layerPreview1.Size = new System.Drawing.Size(93, 350);
+            this.layerPreview1.TabIndex = 12;
+            // 
+            // framePreview1
+            // 
+            this.framePreview1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.framePreview1.Location = new System.Drawing.Point(10, 400);
+            this.framePreview1.Name = "framePreview1";
+            this.framePreview1.Size = new System.Drawing.Size(390, 120);
+            this.framePreview1.TabIndex = 11;
             // 
             // animationPreview1
             // 
@@ -103,15 +174,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.layerPreview1);
+            this.Controls.Add(this.framePreview1);
+            this.Controls.Add(this.frameText);
+            this.Controls.Add(this.frame);
+            this.Controls.Add(this.addFrame);
             this.Controls.Add(this.frameRateText);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.frameRate);
             this.Controls.Add(this.stepForward);
             this.Controls.Add(this.stepBackward);
             this.Controls.Add(this.playPause);
             this.Controls.Add(this.animationPreview1);
             this.Name = "AnimationPane";
             this.Size = new System.Drawing.Size(433, 600);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.frameRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.frame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,8 +200,13 @@
         private System.Windows.Forms.Button playPause;
         private System.Windows.Forms.Button stepBackward;
         private System.Windows.Forms.Button stepForward;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown frameRate;
         private System.Windows.Forms.TextBox frameRateText;
         private System.Windows.Forms.ToolTip animationToolTips;
+        private System.Windows.Forms.Button addFrame;
+        private System.Windows.Forms.NumericUpDown frame;
+        private System.Windows.Forms.TextBox frameText;
+        private FramePreview framePreview1;
+        private LayerPreview layerPreview1;
     }
 }

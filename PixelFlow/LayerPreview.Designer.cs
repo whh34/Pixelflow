@@ -1,6 +1,6 @@
 ﻿namespace PixelFlow
 {
-    partial class AnimationPreview
+    partial class LayerPreview
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,15 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // AnimationPreview
+            // LayerPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Name = "AnimationPreview";
-            this.Size = new System.Drawing.Size(300, 300);
-            this.Load += new System.EventHandler(this.AnimationPreview_Load);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Name = "LayerPreview";
+            this.Size = new System.Drawing.Size(93, 350);
             this.ResumeLayout(false);
 
         }

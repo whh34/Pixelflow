@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +45,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnimationPane.cs">
@@ -63,6 +65,18 @@
     </Compile>
     <Compile Include="DrawPane.Designer.cs">
       <DependentUpon>DrawPane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FramePreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FramePreview.Designer.cs">
+      <DependentUpon>FramePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LayerPreview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LayerPreview.Designer.cs">
+      <DependentUpon>LayerPreview.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -93,6 +107,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DrawPane.resx">
       <DependentUpon>DrawPane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FramePreview.resx">
+      <DependentUpon>FramePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LayerPreview.resx">
+      <DependentUpon>LayerPreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -125,6 +145,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{9c14d421-e4fc-4d3f-8213-ce67fb912ace}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
