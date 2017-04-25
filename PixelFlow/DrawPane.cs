@@ -565,9 +565,9 @@ namespace PixelFlow
             int minY = Math.Min(drawY, e.Y) / scale;
             int maxY = Math.Max(drawY, e.Y) / scale;
 
-            for (int x = minX; x < maxX; x++)
+            for (int x = minX; x < maxX + 1; x++)
             {
-                for (int y = minY; y < maxY; y++)
+                for (int y = minY; y < maxY + 1; y++)
                 {
                     ColorPixel(x, y, actingPrimaryColor);
                 }
@@ -635,7 +635,7 @@ namespace PixelFlow
 
         private void DrawEyedropperUp(MouseEventArgs e)
         {
-            Bitmap image = new Bitmap((int)drawspace.DpiX, (int)drawspace.DpiY, drawspace);
+            /*Bitmap image = new Bitmap((int)drawspace.DpiX, (int)drawspace.DpiY, drawspace);
 
             if (e.X >= 0 && e.Y >= 0)
             {
@@ -649,6 +649,20 @@ namespace PixelFlow
                     SetSecondaryColor(image.GetPixel(e.X, e.Y));
                     mainWindow.GetToolbar().SetSecondaryColorSelector(image.GetPixel(e.X, e.Y));
                 }
+            }*/
+
+            int sX = e.X / scale;
+            int sY = e.Y / scale;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                SetPrimaryColor(GetPixel(sX, sY));
+                mainWindow.GetToolbar().SetPrimaryColorSelector(GetPixel(sX, sY));
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                SetSecondaryColor(GetPixel(sX, sY));
+                mainWindow.GetToolbar().SetSecondaryColorSelector(GetPixel(sX, sY));
             }
         }
     }
