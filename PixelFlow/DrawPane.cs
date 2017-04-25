@@ -371,7 +371,7 @@ namespace PixelFlow
             }
             else if (tool == "fill")
             {
-                //DrawFillUp(e);
+                DrawFillUp(e);
             }
             else if (tool == "select")
             {
@@ -635,6 +635,39 @@ namespace PixelFlow
         /***********************************************************************/
         /*                                FILL                                 */
         /***********************************************************************/
+
+        private void DrawFillUp(MouseEventArgs e)
+        {
+            int sX = e.X / scale;
+            int sY = e.Y / scale;
+
+            HashSet<Point> inFill = new HashSet<Point>();
+            Queue<Point> openList = new Queue<Point>();
+            openList.Enqueue(new Point(sX, sY));
+            Color color = GetPixel(sX, sY);
+            while (openList.Count > 0)
+            {
+
+                Point active = openList.Dequeue();
+                int x = active.X;
+                int y = active.Y;
+                ColorPixel(x, y, actingPrimaryColor);
+                int xMax = size.Width;
+                int yMax = size.Height;
+                Point[] points = { new Point(x + 1, y), new Point(x, y + 1), new Point(x - 1, y), new Point(x, y - 1) };
+                foreach (Point p in points)
+                {
+                    if (p.X < xMax && p.Y < yMax && p.X >= 0 && p.Y >= 0 && !inFill.Contains(p) && !openList.Contains(p)
+                        && GetPixel(p.X, p.Y).Equals(color))
+                    {
+                        openList.Enqueue(p);
+                    }
+                }
+
+                inFill.Add(active);
+            }
+            DisplayImage();
+        }
 
 
 
