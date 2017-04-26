@@ -68,7 +68,14 @@ namespace PixelFlow
                     }
                     else
                     {
-                        System.Threading.Thread.Sleep(1000);
+                        try
+                        {
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                        catch (System.Threading.ThreadInterruptedException e)
+                        {
+                            //no op
+                        }
                     }
                 }          
             }

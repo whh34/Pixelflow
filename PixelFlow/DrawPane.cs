@@ -88,7 +88,7 @@ namespace PixelFlow
             {
                 for (int j = 0; j < tempClipboard.GetLength(1); j++)
                 {
-
+                    g.FillRectangle(new SolidBrush(tempClipboard[i, j].color), (sX + i) * scale, (sY + j) * scale, scale, scale);
                 }
             }
         }
@@ -656,7 +656,7 @@ namespace PixelFlow
         {
             drawX = e.X;
             drawY = e.Y;
-            selectedRegion = new Rectangle(e.X / scale, e.Y / scale, 0, 0);
+            selectedRegion = new Rectangle(-1, -1, Grid.size.Width + 1, Grid.size.Height + 1);
             DisplayImage();
             dragable = true;
         }
@@ -722,6 +722,8 @@ namespace PixelFlow
             selectedRegion.X += dX;
             selectedRegion.Y += dY;
             DisplayImage();
+            RenderSelection();
+            drawSelection();
         }
 
         private void DragUp(MouseEventArgs e)
