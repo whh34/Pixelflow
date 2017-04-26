@@ -268,6 +268,7 @@
             this.dragTool.TabIndex = 14;
             this.toolsToolTips.SetToolTip(this.dragTool, "Selector");
             this.dragTool.UseVisualStyleBackColor = true;
+            this.dragTool.Click += new System.EventHandler(this.dragTool_Click);
             // 
             // ToolbarPane
             // 

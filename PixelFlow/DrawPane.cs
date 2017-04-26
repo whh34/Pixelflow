@@ -35,6 +35,7 @@ namespace PixelFlow
         private int lineThickness = 1;
         private int scale = 10;
         private Size size;
+        private Rectangle selectedRegion;
 
         private List<Bitmap> history;
         private int currentHistory;
@@ -57,6 +58,9 @@ namespace PixelFlow
             //this.pen = new Pen(primaryColor, lineThickness); // apparently this doesn't work because you need a new pen every time you draw. idk.
 
             frame = 1;//mainWindow.GetAnimationPane().GetAnimationPreview().animation.Count + 1;
+
+            //Set the selected region to be the entire image
+            selectedRegion = new Rectangle(0, 0, Grid.size.Width, Grid.size.Height);
 
             history = new List<Bitmap>();
             history.Add(Grid.DisplayMap);
@@ -293,6 +297,10 @@ namespace PixelFlow
             {
                 DrawEyedropperDown(e);
             }
+            else if (tool == "drag")
+            {
+                //
+            }
             else
             {
                 Console.WriteLine("No viable tool selected");
@@ -336,6 +344,10 @@ namespace PixelFlow
             else if (tool == "eyedropper")
             {
                 DrawEyedropperMove(e);
+            }
+            else if (tool == "drag")
+            {
+                DragMove(e);
             }
             else
             {
@@ -677,6 +689,21 @@ namespace PixelFlow
         /***********************************************************************/
 
 
+
+        /***********************************************************************/
+        /*                                DRAG                                 */
+        /***********************************************************************/
+
+        private void DragDown(MouseEventArgs e)
+        {
+            drawX = e.X;
+            drawY = e.Y;
+        }
+
+        private void DragMove(MouseEventArgs e)
+        {
+            
+        }
 
 
         /***********************************************************************/

@@ -122,5 +122,36 @@ namespace Utilities
             temp.UnlockBits(bitmapData);
             return bitmapSource;
         }
+
+        //Copies a region to another grid
+        public GridCell[,] CopyRegion(Rectangle r)
+        {
+            
+            GridCell[,] region = new GridCell[r.Width, r.Height];
+            for (int i = 0; i < r.Width; i++)
+            {
+                for (int j = 0; j < r.Height; j++)
+                {
+                    region[i, j] = new GridCell(this.GetCell(r.X + i, r.Y + j));
+                }
+            }
+            return region;
+        }
+
+        //Overwrites a region with the provided one
+        public void PasteRegion(int x, int y, GridCell[,] region)
+        { 
+            TestBounds(new Rectangle(x, y, region.GetLength(0) + x, region.GetLength(1) + y));
+            for ()
+        }
+
+        //Tests to make sure a given rectangle is within bounds
+        private void TestBounds(Rectangle r)
+        {
+            if (r.Y < 0 || r.X < 0 || r.Top >= size.Height || r.Width >= size.Width)
+            {
+                throw new ArgumentOutOfRangeException("Region out of bounds " + r);
+            }
+        }
     }
 }

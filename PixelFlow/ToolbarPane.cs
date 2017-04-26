@@ -149,6 +149,16 @@ namespace PixelFlow
         }
 
         /*
+         * Sets the active tool to the drag tool, resets every buttons color, and sets the color of this button to blue
+         */
+        private void dragTool_Click(object sender, EventArgs e)
+        {
+            this.activeTool = "drag";
+            ResetButtonColors();
+            this.dragTool.BackColor = Color.LightSkyBlue;
+        }
+
+        /*
          * Sets all of the button colors to LightGray to show that they are not active
          */
         void ResetButtonColors()
@@ -179,5 +189,7 @@ namespace PixelFlow
             mainWindow = (MainWindow)this.Parent;
             mainWindow.GetDrawPane().SetSecondaryAlpha((int)this.alpha2Value.Value);
         }
+
+        
     }
 }
