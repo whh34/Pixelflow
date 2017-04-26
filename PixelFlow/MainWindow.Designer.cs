@@ -30,8 +30,8 @@
         {
             this.animationPane1 = new PixelFlow.AnimationPane();
             this.toolbarPane1 = new PixelFlow.ToolbarPane();
-            this.drawPane1 = new PixelFlow.DrawPane();
             this.optionsBar1 = new PixelFlow.OptionsBar();
+            this.drawPanePanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // animationPane1
@@ -39,10 +39,10 @@
             this.animationPane1.BackColor = System.Drawing.SystemColors.GrayText;
             this.animationPane1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.animationPane1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.animationPane1.Location = new System.Drawing.Point(1128, 100);
-            this.animationPane1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.animationPane1.Location = new System.Drawing.Point(751, 66);
+            this.animationPane1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.animationPane1.Name = "animationPane1";
-            this.animationPane1.Size = new System.Drawing.Size(648, 948);
+            this.animationPane1.Size = new System.Drawing.Size(433, 615);
             this.animationPane1.TabIndex = 6;
             // 
             // toolbarPane1
@@ -50,21 +50,11 @@
             this.toolbarPane1.BackColor = System.Drawing.SystemColors.GrayText;
             this.toolbarPane1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolbarPane1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolbarPane1.Location = new System.Drawing.Point(0, 100);
-            this.toolbarPane1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.toolbarPane1.Location = new System.Drawing.Point(0, 66);
+            this.toolbarPane1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.toolbarPane1.Name = "toolbarPane1";
-            this.toolbarPane1.Size = new System.Drawing.Size(167, 948);
+            this.toolbarPane1.Size = new System.Drawing.Size(112, 615);
             this.toolbarPane1.TabIndex = 4;
-            // 
-            // drawPane1
-            // 
-            this.drawPane1.BackColor = System.Drawing.SystemColors.Window;
-            this.drawPane1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPane1.Location = new System.Drawing.Point(198, 114);
-            this.drawPane1.Margin = new System.Windows.Forms.Padding(0);
-            this.drawPane1.Name = "drawPane1";
-            this.drawPane1.Size = new System.Drawing.Size(479, 491);
-            this.drawPane1.TabIndex = 3;
             // 
             // optionsBar1
             // 
@@ -72,36 +62,47 @@
             this.optionsBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.optionsBar1.Dock = System.Windows.Forms.DockStyle.Top;
             this.optionsBar1.Location = new System.Drawing.Point(0, 0);
-            this.optionsBar1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.optionsBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.optionsBar1.Name = "optionsBar1";
-            this.optionsBar1.Size = new System.Drawing.Size(1776, 100);
+            this.optionsBar1.Size = new System.Drawing.Size(1184, 66);
             this.optionsBar1.TabIndex = 5;
             this.optionsBar1.Load += new System.EventHandler(this.optionsBar1_Load);
             // 
+            // drawPanePanel
+            // 
+            this.drawPanePanel.AutoScroll = true;
+            this.drawPanePanel.AutoSize = true;
+            this.drawPanePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPanePanel.Location = new System.Drawing.Point(112, 66);
+            this.drawPanePanel.Name = "drawPanePanel";
+            this.drawPanePanel.Size = new System.Drawing.Size(639, 615);
+            this.drawPanePanel.TabIndex = 7;
+            // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(1776, 1048);
+            this.ClientSize = new System.Drawing.Size(1184, 681);
+            this.Controls.Add(this.drawPanePanel);
             this.Controls.Add(this.animationPane1);
             this.Controls.Add(this.toolbarPane1);
-            this.Controls.Add(this.drawPane1);
             this.Controls.Add(this.optionsBar1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(1789, 1078);
+            this.MinimumSize = new System.Drawing.Size(1198, 688);
             this.Name = "MainWindow";
             this.Text = "PixelFlow";
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.LocationChanged += new System.EventHandler(this.MainWindow_LocationChanged);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private DrawPane drawPane1;
         private ToolbarPane toolbarPane1;
         private OptionsBar optionsBar1;
         private AnimationPane animationPane1;
+        private System.Windows.Forms.Panel drawPanePanel;
     }
 }
 

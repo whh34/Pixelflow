@@ -1,6 +1,6 @@
 ﻿namespace PixelFlow
 {
-    partial class FramePreview
+    partial class FrameButton
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,20 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // FramePreview
+            // button
+            // 
+            this.button.AutoSize = true;
+            this.button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button.CausesValidation = false;
+            this.button.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button.Location = new System.Drawing.Point(0, 0);
+            this.button.Name = "button";
+            this.button.Size = new System.Drawing.Size(100, 100);
+            this.button.TabIndex = 0;
+            this.button.UseVisualStyleBackColor = true;
+            this.button.Click += new System.EventHandler(this.button_Click);
+            // 
+            // FrameButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Name = "FramePreview";
-            this.Size = new System.Drawing.Size(390, 120);
+            this.Controls.Add(this.button);
+            this.Name = "FrameButton";
+            this.Size = new System.Drawing.Size(100, 100);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button;
     }
 }

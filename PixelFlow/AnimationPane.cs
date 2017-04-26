@@ -12,13 +12,9 @@ namespace PixelFlow
 {
     public partial class AnimationPane : UserControl
     {
-        private MainWindow mainWindow;
-
         public AnimationPane()
         {
             InitializeComponent();
-
-            mainWindow = (MainWindow)this.Parent;
 
             this.playPause.BackColor = Color.LightGray;
             this.stepBackward.BackColor = Color.LightGray;
@@ -33,22 +29,29 @@ namespace PixelFlow
             return this.animationPreview1;
         }
 
+        public FramePreview GetFramePreview()
+        {
+            return framePreview1;
+        }
+
         private void addFrame_Click(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent;
-
-            int width = mainWindow.GetDrawPane().GetImage().Width;
-            int height = mainWindow.GetDrawPane().GetImage().Height;
+            /*
+            int width = MainWindow.Instance.GetDrawPane().GetImage().Width;
+            int height = MainWindow.Instance.GetDrawPane().GetImage().Height;
             Bitmap newBitmap = new Bitmap(width, height);
             this.framePreview1.AddFrame(newBitmap);
             this.frame.Maximum = this.framePreview1.numFrames;
 
             this.animationPreview1.animation.Add(newBitmap);
+            */
+            int frameIndex = MainWindow.Instance.AddNewFrame();
+            framePreview1.AddNewPreview(frameIndex);
         }
 
         private void frame_ValueChanged(object sender, EventArgs e)
         {
-            this.framePreview1.currFrame = (int)this.frame.Value;
+            //this.framePreview1.currFrame = (int)this.frame.Value;
         }
 
         private void frameRate_ValueChanged(object sender, EventArgs e)

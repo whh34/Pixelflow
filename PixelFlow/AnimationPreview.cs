@@ -12,8 +12,6 @@ namespace PixelFlow
 {
     public partial class AnimationPreview : UserControl
     {
-        public MainWindow mainWindow;
-
         public int currentFrame = 1;
         public int frameRate = 0;
         public System.Threading.Thread animator;
@@ -29,7 +27,6 @@ namespace PixelFlow
         public AnimationPreview()
         {
             InitializeComponent();
-            mainWindow = (MainWindow)this.Parent;
             //Test
             testAnim.Add(1);
             testAnim.Add(2);
@@ -39,8 +36,7 @@ namespace PixelFlow
 
         private void AnimationPreview_Load(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)Parent.Parent;
-            animation.Add(mainWindow.GetDrawPane().GetImage());
+            //animation.Add(MainWindow.Instance.GetDrawPane().GetImage());
 
             animator = new System.Threading.Thread(Play);
             animator.Start();
