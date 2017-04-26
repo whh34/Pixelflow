@@ -48,7 +48,7 @@ namespace PixelFlow
             frame = 1;
 
             history = new List<Bitmap>();
-            history.Add(Grid.DisplayMap);
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
         }
 
         public void ImportPNG(Stream pngStream, int scale, int nativeScale)
@@ -87,12 +87,9 @@ namespace PixelFlow
             }
 
             //Grid = new DrawingGrid(history[currentHistory].Width, history[currentHistory].Height, scale);
-            Grid.DisplayMap = history[currentHistory];
-            DisplayImage(history[currentHistory]);
-            
-            SetScale(scale);
-
-            Debug.WriteLine(history);
+            //Grid.DisplayMap = history[currentHistory];
+            Grid = new DrawingGrid(history[currentHistory], scale, scale);
+            DisplayImage();
         }
 
         public void Redo()
@@ -102,12 +99,8 @@ namespace PixelFlow
             {
                 currentHistory = history.Count - 1;
             }
-            Grid.DisplayMap = history[currentHistory];
-            DisplayImage(history[currentHistory]);
-
-            SetScale(scale);
-
-            Debug.WriteLine(history);
+            Grid = new DrawingGrid(history[currentHistory], scale, scale);
+            DisplayImage();
         }
 
         public void SetScale(int newScale)
@@ -347,7 +340,13 @@ namespace PixelFlow
             // update history
             if (currentHistory != history.Count - 1)
             {
-                history.RemoveRange(currentHistory, history.Count - 1);
+                List<Bitmap> tempHistory = new List<Bitmap>();
+                for (int i = 0; i < currentHistory + 1; i++)
+                {
+                    tempHistory.Add(history[i]);
+                }
+
+                history = tempHistory;
             }
 
             history.Add((Bitmap)Grid.DisplayMap.Clone());
@@ -461,8 +460,6 @@ namespace PixelFlow
                 y += dy;
                 ColorPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
             }
-
-            DisplayImage();
         }
 
 
