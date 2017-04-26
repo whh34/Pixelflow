@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace PixelFlow
 {
@@ -54,6 +56,16 @@ namespace PixelFlow
         {
             mainWindow = (MainWindow)this.Parent;
             mainWindow.GetDrawPane().Redo();
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BitmapSource bs = ((MainWindow)Parent).GetDrawPane().Grid.CreateSource(1);
+            PngBitmapEncoder pngEnc = new PngBitmapEncoder();
+            pngEnc.Frames.Add(BitmapFrame.Create(bs));
+
+            FileStream stream = new FileStream("ohfuckyah.png", FileMode.Create);
+            pngEnc.Save(stream);
         }
     }
 }

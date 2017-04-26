@@ -705,6 +705,7 @@ namespace PixelFlow
                 SetSecondaryColor(GetPixel(sX, sY));
                 mainWindow.GetToolbar().SetSecondaryColorSelector(GetPixel(sX, sY));
             }
+            
         }
     }
 }

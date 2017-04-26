@@ -43,6 +43,8 @@ namespace PixelFlow
             AnimationPane animForm = (AnimationPane)Parent;
             MainWindow mainForm = (MainWindow)animForm.Parent;
             animation.Add(mainForm.GetDrawPane().GetImage());
+            mainWindow = (MainWindow)Parent.Parent;
+            animation.Add(mainWindow.GetDrawPane().GetImage());
 
             animator = new System.Threading.Thread(Play);
             animator.Start();
