@@ -483,8 +483,6 @@ namespace PixelFlow
         private void DrawCircleUp(MouseEventArgs e)
         {
 
-
-            //Brush brush = new SolidBrush(actingPrimaryColor);
             int minX = Math.Min(drawX, e.X) / scale;
             int maxX = Math.Max(drawX, e.X) / scale + 1;
             int minY = Math.Min(drawY, e.Y) / scale;
@@ -509,8 +507,6 @@ namespace PixelFlow
                 int x = (int)(cenX + Math.Cos(theta) * xRad);
                 int y = (int)(cenY + Math.Sin(theta) * yRad);
 
-                //ColorPixel(lastX, lastY, actingPrimaryColor);
-                //ColorPixel(x, y, actingPrimaryColor);
                 if (x != lastX || y != lastY)
                 {
                     DrawLine(lastX, lastY, x, y);
@@ -519,67 +515,7 @@ namespace PixelFlow
                 lastX = x;
                 lastY = y;
 
-                // PLEASE REMOVE
-                //DisplayImage();
             }
-            
-            /*int a2 = wRad * wRad;
-            int b2 = hRad * hRad;
-            int fa2 = 4 * a2;
-            int fb2 = 4 * b2;
-            int x, y, sigma;
-
-            // top and bottom
-            for (x = 0, y = hRad, sigma = 2 * b2 + a2 * (1 - 2 * hRad); b2 * x <= a2 * y; x++)
-            {
-                ColorPixel(cenX + x, cenY + y, actingPrimaryColor);
-                ColorPixel(cenX - x, cenY + y, actingPrimaryColor);
-                ColorPixel(cenX + x, cenY - y, actingPrimaryColor);
-                ColorPixel(cenX - x, cenY - y, actingPrimaryColor);
-                if (sigma >= 0)
-                {
-                    sigma += fa2 * (1 - y);
-                    y--;
-                }
-                sigma += b2 * ((4 * x) + 6);
-            }
-
-            // left and right
-            for (x = wRad, y = 0, sigma = 2 * a2 + b2 * (1 - 2 * wRad); a2 * y <= b2 * x; y++)
-            {
-                ColorPixel(cenX + x, cenY + y, actingPrimaryColor);
-                ColorPixel(cenX - x, cenY + y, actingPrimaryColor);
-                ColorPixel(cenX + x, cenY - y, actingPrimaryColor);
-                ColorPixel(cenX - x, cenY - y, actingPrimaryColor);
-                if (sigma >= 0)
-                {
-                    sigma += fb2 * (1 - x);
-                    x--;
-                }
-                sigma += a2 * ((4 * y) + 6);
-            }*/
-
-            /*
-            Brush brush = new SolidBrush(actingPrimaryColor);
-            if (drawX < e.X && drawY < e.Y)
-            {
-                drawspace.FillEllipse(brush, drawX / scale, drawY / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX < e.X && drawY > e.Y)
-            {
-                drawspace.FillEllipse(brush, drawX / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX > e.X && drawY < e.Y)
-            {
-                drawspace.FillEllipse(brush, e.X / scale, drawY / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-            else if (drawX > e.X && drawY > e.Y)
-            {
-                drawspace.FillEllipse(brush, e.X / scale, e.Y / scale, Math.Abs(drawX / scale - e.X / scale), Math.Abs(drawY / scale - e.Y / scale));
-            }
-
-            //FixPixels();
-            */
 
             DisplayImage();
         }
