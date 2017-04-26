@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows;
+using ImageMagick;
 
 namespace Utilities
 {
@@ -53,7 +54,7 @@ namespace Utilities
             }
         }
 
-        // Saves a Bitmap as a .png file
+        // Saves a Bitmap as a png file
         public static void SaveBitmapAsPNG(Bitmap bitmap, Stream pngStream)
         {
             BitmapSource source = CreateSourceFromBitmap(bitmap);
@@ -63,15 +64,35 @@ namespace Utilities
             pngEnc.Save(pngStream);
         }
 
-        // Saves a list of Bitmaps as a .gif file
+        // Saves a list of Bitmaps as a gif file
         public static void SaveBitmapsAsGIF(List<Bitmap> bitmaps, Stream gifStream)
         {
             GifBitmapEncoder gifEnc = new GifBitmapEncoder();
             foreach (Bitmap bmp in bitmaps)
                 gifEnc.Frames.Add(BitmapFrame.Create(CreateSourceFromBitmap(bmp)));
-
-            // Probably needs some work, I think that the lack of a ColorPallette in the BitmapSources could be a problem
+            
             gifEnc.Save(gifStream);
+        }
+
+        // Saves a list of Bitmaps as an animated gif file
+        public static void SaveBitmapsAsAnimatedGIF(List<Bitmap> bitmaps, string path, int fps)
+        {
+            MagickImageCollection collection = new MagickImageCollection();
+            int delay = 100 / fps;
+
+            for (int i = 0; i < bitmaps.Count; i++)
+            {
+                collection.Add(new MagickImage(bitmaps[i]));
+                collection[i].AnimationDelay = delay;
+            }
+
+            QuantizeSettings settings = new QuantizeSettings();
+            settings.Colors = 256;
+            collection.Quantize(settings);
+
+            collection.Optimize();
+
+            collection.Write(path);
         }
     }
 }

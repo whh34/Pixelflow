@@ -68,9 +68,8 @@ namespace PixelFlow
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FileStream stream = new FileStream("ohfuckyah.png", FileMode.Open);
-            MainWindow.Instance.GetDrawPane().ImportPNG(stream, (int)zoomPercent.Value, 10); // should do this through drawpane => DrawPane.LoadImage() or maybe ImportImage()
-            stream.Close();
+            ImportControl imp = new ImportControl();
+            DialogueForm dialogue = new DialogueForm(imp, "Import");
         }
     }
 }

@@ -27,8 +27,6 @@ namespace PixelFlow
 
         public void UpdatePreviewImage()
         {
-            //Graphics g = button.CreateGraphics();
-            //g.DrawImage(MainWindow.Instance.GetDrawPane(frameIndex).GetImage(), 0, 0, button.Width, button.Height);
             button.BackgroundImage = MainWindow.Instance.GetDrawPane(frameIndex).GetImage();
             Refresh();
         }
