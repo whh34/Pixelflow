@@ -12,17 +12,32 @@ namespace PixelFlow
 {
     public partial class MainWindow : Form
     {
+        private static MainWindow _mainWindow;
+        public static MainWindow Instance
+        {
+            get
+            {
+                return _mainWindow;
+            }
+        }
+
+        private int currentFrameIndex;
+        private List<DrawPane> _Frames;
+        public List<DrawPane> Frames
+        {
+            get { return _Frames; }
+        }
+
         public MainWindow()
         {
+            _mainWindow = this;
             InitializeComponent();
+
+            _Frames = new List<DrawPane>();
+            currentFrameIndex = -1;
         }
 
         private void penTool_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void drawPane1_Load(object sender, EventArgs e)
         {
 
         }
@@ -32,19 +47,63 @@ namespace PixelFlow
 
         }
 
+        public int GetCurrentFrameIndex()
+        {
+            return currentFrameIndex;
+        }
+
+        public int GetNumberOfFrames()
+        {
+            return Frames.Count;
+        }
+
+        // Adds a new DrawPane and returns the index of the DrawPane
+        public int AddNewFrame()
+        {
+            int toReturn = Frames.Count;
+            currentFrameIndex = toReturn;
+            DrawPane newFrame = new DrawPane();
+            Frames.Add(newFrame);
+            drawPanePanel.Controls.Clear();
+            drawPanePanel.Controls.Add(newFrame);
+
+            return toReturn;
+        }
+
+        // Sets the active DrawPane to an existing DrawPane in the Frame list
+        public void SetDrawPane(int index)
+        {
+            currentFrameIndex = index;
+            drawPanePanel.Controls.Clear();
+            drawPanePanel.Controls.Add(Frames[index]);
+            Frames[index].DisplayImage();
+        }
+
+        // Returns the current frame
+        public DrawPane GetDrawPane()
+        {
+            return Frames[currentFrameIndex];
+        }
+
+        // Returns a specified DrawPane
+        public DrawPane GetDrawPane(int index)
+        {
+            return Frames[index];
+        }
+
         public ToolbarPane GetToolbar()
         {
             return this.toolbarPane1;
         }
 
-        public DrawPane GetDrawPane()
-        {
-            return this.drawPane1;
-        }
-
         public AnimationPane GetAnimationPane()
         {
             return this.animationPane1;
+        }
+
+        public OptionsBar GetOptionsBar()
+        {
+            return optionsBar1;
         }
 
         private void optionsBar1_Load(object sender, EventArgs e)
@@ -66,9 +125,9 @@ namespace PixelFlow
             this.GetAnimationPane().GetAnimationPreview().animator.Join();
         }
 
-        private void toolbarPane1_Load_1(object sender, EventArgs e)
+        private void MainWindow_LocationChanged(object sender, EventArgs e)
         {
-
+            Refresh();
         }
     }
 }

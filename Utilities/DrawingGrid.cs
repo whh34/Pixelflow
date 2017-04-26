@@ -7,11 +7,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace Utilities
 {
     public class DrawingGrid
     {
+        // An abstraction class of System.Drawing.Color
+        //      Allows for more interesting ways to initialize colors.
         public class GridCell
         {
             public Color color { get; set; }
@@ -46,7 +49,7 @@ namespace Utilities
         public Bitmap DisplayMap;
         private Graphics DisplayGraphics;
 
-        // Constructor for DrawingGrid
+        // Constructor for creating a blank DrawingGrid
         public DrawingGrid(int sizeX, int sizeY, int scale)
         {
             size = new Size(sizeX, sizeY);
@@ -60,12 +63,32 @@ namespace Utilities
             Scale = scale;
         }
 
+        // Constructor for creating a DrawingGrid of an input Bitmap
+        public DrawingGrid(Bitmap inputMap, int scale, int nativeScale)
+        {
+            size = new Size(inputMap.Size.Width / nativeScale, inputMap.Size.Height / nativeScale);
+            Grid = new GridCell[size.Width, size.Height];
+
+            for (int x = 0; x < size.Width; x++)
+            {
+                for (int y = 0; y < size.Height; y++)
+                    Grid[x, y] = new GridCell(inputMap.GetPixel(x * nativeScale, y * nativeScale));
+            }
+
+            Scale = scale;
+        }
+
+        // Constructor for creating a DrawingGrid of an input .png file
+        public DrawingGrid(Stream pngStream, int scale, int nativeScale) : this(BitmapConverters.CreateBitmapFromPNG(pngStream), scale, nativeScale)
+        {
+            
+        }
+
         // Initializes a new display bitmap and corresponding graphics object
         private void UpdateDisplayMap()
         {
             DisplayMap = new Bitmap(size.Width * Scale, size.Height * Scale);
             DisplayGraphics = Graphics.FromImage(DisplayMap);
-            //DisplayGraphics.CompositingMode = CompositingMode.SourceCopy;
 
             for (int x = 0; x < size.Width; x++)
             {

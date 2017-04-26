@@ -15,25 +15,27 @@ namespace PixelFlow
     public partial class OptionsBar : UserControl
     {
 
-        private MainWindow mainWindow;
+        //private MainWindow mainWindow;
 
         public OptionsBar()
         {
-            InitializeComponent();
+            InitializeComponent();  
+        }
 
-            mainWindow = (MainWindow)this.Parent;
+        public int GetCurrentScale()
+        {
+            return (int)zoomPercent.Value;
         }
 
         private void lineThickness_ValueChanged(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent;
-            mainWindow.GetDrawPane().SetLineThickness((int)lineThickness.Value);
+            MainWindow.Instance.GetDrawPane().SetLineThickness((int)lineThickness.Value);
         }
 
         private void zoomPercent_ValueChanged(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent;
-            mainWindow.GetDrawPane().SetScale((int)zoomPercent.Value);
+            
+            MainWindow.Instance.GetDrawPane().SetScale((int)zoomPercent.Value);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -48,24 +50,27 @@ namespace PixelFlow
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent;
-            mainWindow.GetDrawPane().Undo();
+            
+            MainWindow.Instance.GetDrawPane().Undo();
         }
 
         private void redoButton_Click(object sender, EventArgs e)
         {
-            mainWindow = (MainWindow)this.Parent;
-            mainWindow.GetDrawPane().Redo();
+            
+            MainWindow.Instance.GetDrawPane().Redo();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BitmapSource bs = ((MainWindow)Parent).GetDrawPane().Grid.CreateSource(1);
-            PngBitmapEncoder pngEnc = new PngBitmapEncoder();
-            pngEnc.Frames.Add(BitmapFrame.Create(bs));
+            ExportControl exp = new ExportControl();
+            DialogueForm dialogue = new DialogueForm(exp, "Export");
+        }
 
-            FileStream stream = new FileStream("ohfuckyah.png", FileMode.Create);
-            pngEnc.Save(stream);
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileStream stream = new FileStream("ohfuckyah.png", FileMode.Open);
+            MainWindow.Instance.GetDrawPane().ImportPNG(stream, (int)zoomPercent.Value, 10); // should do this through drawpane => DrawPane.LoadImage() or maybe ImportImage()
+            stream.Close();
         }
     }
 }
