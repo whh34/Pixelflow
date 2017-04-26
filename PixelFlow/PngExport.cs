@@ -16,6 +16,7 @@ namespace PixelFlow
         public PngExport()
         {
             InitializeComponent();
+            scaleSelector.Value = MainWindow.Instance.GetOptionsBar().GetCurrentScale();
         }
 
         private void currentButton_Click(object sender, EventArgs e)
