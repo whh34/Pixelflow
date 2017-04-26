@@ -36,6 +36,7 @@ namespace PixelFlow
         private int scale = 10;
         private Size size;
         private Rectangle selectedRegion;
+        private DrawingGrid.GridCell[,] tempClipboard;
 
         private List<Bitmap> history;
         private int currentHistory;
@@ -60,7 +61,7 @@ namespace PixelFlow
             frame = 1;//mainWindow.GetAnimationPane().GetAnimationPreview().animation.Count + 1;
 
             //Set the selected region to be the entire image
-            selectedRegion = new Rectangle(0, 0, Grid.size.Width, Grid.size.Height);
+            selectedRegion = new Rectangle(-1, -1, Grid.size.Width + 1, Grid.size.Height + 1);
 
             history = new List<Bitmap>();
             history.Add(Grid.DisplayMap);
@@ -84,6 +85,21 @@ namespace PixelFlow
         {
             Graphics g = CreateGraphics();
             g.DrawImage(Grid.DisplayMap, 0, 0, Grid.DisplayMap.Width, Grid.DisplayMap.Height);
+            drawSelection();
+        }
+
+        private void RenderSelection()
+        {
+            int sX = selectedRegion.X;
+            int sY = selectedRegion.Y;
+            Graphics g = CreateGraphics();
+            for (int i = 0; i < tempClipboard.GetLength(0); i++)
+            {
+                for (int j = 0; j < tempClipboard.GetLength(1); j++)
+                {
+
+                }
+            }
         }
 
         private void DrawPane_Load(object sender, EventArgs e)
@@ -299,7 +315,7 @@ namespace PixelFlow
             }
             else if (tool == "drag")
             {
-                //
+                DragDown(e);
             }
             else
             {
@@ -392,6 +408,10 @@ namespace PixelFlow
             else if (tool == "eyedropper")
             {
                 DrawEyedropperUp(e);
+            }
+            else if (tool == "drag")
+            {
+                DragUp(e);
             }
             else
             {
@@ -692,20 +712,47 @@ namespace PixelFlow
         {
             drawX = e.X;
             drawY = e.Y;
+            selectedRegion = new Rectangle(e.X / scale, e.Y / scale, 0, 0);
+            DisplayImage();
             dragable = true;
         }
 
         private void SelectMove(MouseEventArgs e)
         {
             if (!dragable) return;
+            int sX = (int) Math.Round((double)drawX / scale);
+            int sY = (int) Math.Round((double)drawY / scale);
+            int fX = (int)Math.Round((double)e.X / scale);
+            int fY = (int)Math.Round((double)e.Y / scale);
+            if (fX < sX)
+            {
+                int tmp = fX;
+                fX = sX;
+                sX = tmp;
+            }
+            if (fY < sY)
+            {
+                int tmp = fY;
+                fX = sY;
+                sY = tmp;
+            }
+            Rectangle newRegion = new Rectangle(sX, sY, fX - sX, fY - sY);
+            if (newRegion.Equals(selectedRegion)) return;
+            selectedRegion = newRegion;
             DisplayImage();
-            Graphics g = this.CreateGraphics();
-            g.DrawRectangle(new Pen(Color.Black, scale), drawX, drawY, e.X - drawX, e.Y - drawY);
         }
 
         private void SelectUp(MouseEventArgs e)
         {
             dragable = false;
+        }
+
+        private void drawSelection()
+        {
+            Graphics g = this.CreateGraphics();
+            Brush b = new HatchBrush(HatchStyle.SmallCheckerBoard, Color.Black, Color.Transparent);
+            Rectangle toDraw = new Rectangle(selectedRegion.X * scale + scale / 2, selectedRegion.Y * scale + scale / 2, selectedRegion.Width * scale, selectedRegion.Height * scale);
+            g.DrawRectangle(new Pen(b, scale), toDraw);
         }
         /***********************************************************************/
         /*                                DRAG                                 */
@@ -715,11 +762,29 @@ namespace PixelFlow
         {
             drawX = e.X;
             drawY = e.Y;
+            tempClipboard = Grid.CopyRegion(selectedRegion);
+            Grid.ClearRegion(selectedRegion);
+            dragable = true;
         }
 
         private void DragMove(MouseEventArgs e)
         {
-            
+            if (!dragable) return;
+            int dX = e.X / scale - drawX / scale;
+            int dY = e.Y / scale - drawY / scale;
+            if (dX == 0 && dY == 0) return; // Take no action if no drag took place
+            drawX = e.X;
+            drawY = e.Y;
+            selectedRegion.X += dX;
+            selectedRegion.Y += dY;
+            DisplayImage();
+        }
+
+        private void DragUp(MouseEventArgs e)
+        {
+            dragable = false;
+            Grid.PasteRegion(selectedRegion.X, selectedRegion.Y, tempClipboard);
+            DisplayImage();
         }
 
 

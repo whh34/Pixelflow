@@ -126,25 +126,48 @@ namespace Utilities
         //Copies a region to another grid
         public GridCell[,] CopyRegion(Rectangle r)
         {
-            
-            GridCell[,] region = new GridCell[r.Width, r.Height];
-            for (int i = 0; i < r.Width; i++)
+            GridCell[,] region = new GridCell[r.Width + 1, r.Height + 1];
+            for (int i = 0; i <= r.Width; i++)
             {
-                for (int j = 0; j < r.Height; j++)
+                for (int j = 0; j <= r.Height; j++)
                 {
-                    region[i, j] = new GridCell(this.GetCell(r.X + i, r.Y + j));
+                    Color c;
+                    if (IsInBounds(r.X + i, r.Y + j))
+                    {
+                        c = this.GetCell(r.X + i, r.Y + j);
+                    }
+                    else
+                    {
+                        c = Color.White;
+                    }
+                    region[i, j] = new GridCell(c);
                 }
             }
             return region;
         }
 
+        //Clears all cells in a region
+        public void ClearRegion(Rectangle r)
+        {
+            
+            for (int i = 0; i <= r.Width; i++)
+            {
+                for (int j = 0; j <= r.Height; j++)
+                {
+                    if (IsInBounds(r.X + i, r.Y + j))
+                    {
+                        this.DrawToGrid(r.X + i, r.Y + j, Color.White);
+                    }
+                }
+            }
+        }
+
         //Overwrites a region with the provided one
         public void PasteRegion(int x, int y, GridCell[,] region)
         { 
-            TestBounds(new Rectangle(x, y, region.GetLength(0) + x, region.GetLength(1) + y));
-            for (int i = 0; i < region.GetLength(0); i++)
+            for (int i = Math.Max(-x, 0); i < region.GetLength(0) && i + x < size.Width; i++)
             {
-                for (int j = 0; j < region.GetLength(1); j++)
+                for (int j = Math.Max(-y, 0); j < region.GetLength(1) && j + y < size.Width; j++)
                 {
                     this.DrawToGrid(x + i, y + j, region[i, j].color);
                 }
@@ -152,12 +175,13 @@ namespace Utilities
         }
 
         //Tests to make sure a given rectangle is within bounds
-        private void TestBounds(Rectangle r)
+        private bool IsInBounds(int x, int y)
         {
-            if (r.Y < 0 || r.X < 0 || r.Top >= size.Height || r.Width >= size.Width)
+            if (x < 0 || y < 0 || x >= size.Height || y >= size.Width)
             {
-                throw new ArgumentOutOfRangeException("Region out of bounds " + r);
+                return false;
             }
+            return true;
         }
     }
 }
