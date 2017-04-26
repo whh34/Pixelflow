@@ -142,7 +142,13 @@ namespace Utilities
         public void PasteRegion(int x, int y, GridCell[,] region)
         { 
             TestBounds(new Rectangle(x, y, region.GetLength(0) + x, region.GetLength(1) + y));
-            for ()
+            for (int i = 0; i < region.GetLength(0); i++)
+            {
+                for (int j = 0; j < region.GetLength(1); j++)
+                {
+                    this.DrawToGrid(x + i, y + j, region[i, j].color);
+                }
+            }
         }
 
         //Tests to make sure a given rectangle is within bounds

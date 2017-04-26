@@ -291,7 +291,7 @@ namespace PixelFlow
             }
             else if (tool == "select")
             {
-                //DrawSelectDown(e);
+                SelectDown(e);
             }
             else if (tool == "eyedropper")
             {
@@ -339,7 +339,7 @@ namespace PixelFlow
             }
             else if (tool == "select")
             {
-                //DrawSelectMove(e);
+                SelectMove(e);
             }
             else if (tool == "eyedropper")
             {
@@ -688,8 +688,25 @@ namespace PixelFlow
         /*                               SELECT                                */
         /***********************************************************************/
 
+        private void SelectDown(MouseEventArgs e)
+        {
+            drawX = e.X;
+            drawY = e.Y;
+            dragable = true;
+        }
 
+        private void SelectMove(MouseEventArgs e)
+        {
+            if (!dragable) return;
+            DisplayImage();
+            Graphics g = this.CreateGraphics();
+            g.DrawRectangle(new Pen(Color.Black, scale), drawX, drawY, e.X - drawX, e.Y - drawY);
+        }
 
+        private void SelectUp(MouseEventArgs e)
+        {
+            dragable = false;
+        }
         /***********************************************************************/
         /*                                DRAG                                 */
         /***********************************************************************/
