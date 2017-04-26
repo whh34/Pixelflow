@@ -56,10 +56,10 @@
             // 
             // drawPane1
             // 
-            this.drawPane1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.drawPane1.AutoScroll = true;
             this.drawPane1.BackColor = System.Drawing.SystemColors.Window;
             this.drawPane1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.drawPane1.Location = new System.Drawing.Point(132, 74);
+            this.drawPane1.Location = new System.Drawing.Point(115, 69);
             this.drawPane1.Margin = new System.Windows.Forms.Padding(0);
             this.drawPane1.Name = "drawPane1";
             this.drawPane1.Size = new System.Drawing.Size(320, 320);
