@@ -21,18 +21,13 @@ namespace PixelFlow
         public volatile bool animating = true;
 
         //public List<int> testAnim = new List<int>();
-        public List<Bitmap> animation = new List<Bitmap>(10);
+        //public List<Bitmap> animation = new List<Bitmap>(10);
 
         //Graphics drawspace;
 
         public AnimationPreview()
         {
             InitializeComponent();
-            //Test
-            /*testAnim.Add(1);
-            testAnim.Add(2);
-            testAnim.Add(3);
-            testAnim.Add(4);*/
         }
 
         private void AnimationPreview_Load(object sender, EventArgs e)
@@ -82,13 +77,13 @@ namespace PixelFlow
         public void StepToFrame(int frame)
         {
             currentFrame = frame;
-            if (currentFrame > animation.Count)
+            if (currentFrame > MainWindow.Instance.Frames.Count)
             {
                 currentFrame = 1;
             }
             else if (currentFrame < 1)
             {
-                currentFrame = animation.Count;
+                currentFrame = MainWindow.Instance.Frames.Count;
             }
 
             DisplayFrame(currentFrame);
@@ -104,19 +99,20 @@ namespace PixelFlow
 
             Graphics g = this.CreateGraphics();
 
-            int animScale = (int)this.Size.Width / animation[frame - 1].Width;
+            /*int animScale = (int)this.Size.Width / animation[frame - 1].Width;
 
             if (animScale <= 0)
             {
                 animScale = 1;
             }
+            */
 
-            DrawingGrid grid = new DrawingGrid(animation[frame - 1].Width, animation[frame - 1].Height, animScale);
+            //DrawingGrid grid = new DrawingGrid(animation[frame - 1].Width, animation[frame - 1].Height, animScale);
 
             // load image into grid
 
             //g.DrawImage(grid.DisplayMap, 0, 0, grid.DisplayMap.Width, grid.DisplayMap.Height);
-            g.DrawImage(animation[frame - 1], 0, 0);
+            g.DrawImage(/*animation[frame - 1],*/MainWindow.Instance.GetDrawPane(frame - 1).GetImage(), 0, 0);
         }
 
         /*public void DrawToDisplay(Bitmap image)
