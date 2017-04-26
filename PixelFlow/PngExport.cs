@@ -13,17 +13,29 @@ namespace PixelFlow
 {
     public partial class PngExport : UserControl
     {
+        private string exportDirectory;
         public PngExport()
         {
             InitializeComponent();
             scaleSelector.Value = MainWindow.Instance.GetOptionsBar().GetCurrentScale();
+            exportDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Exports\\";
         }
 
         private void currentButton_Click(object sender, EventArgs e)
         {
             if (fileNameBox.Text != "" && MainWindow.Instance.GetCurrentFrameIndex() != -1)
             {
-                FileStream stream = new FileStream(fileNameBox.Text + ".png", FileMode.Create);
+                FileStream stream;
+                try
+                {
+                    stream = new FileStream(exportDirectory + fileNameBox.Text + ".png", FileMode.Create);
+                }
+                catch (DirectoryNotFoundException ex)
+                {
+                    Directory.CreateDirectory(exportDirectory);
+                    stream = new FileStream(exportDirectory + fileNameBox.Text + ".png", FileMode.Create);
+                }
+
                 Bitmap toSave = MainWindow.Instance.GetDrawPane().Grid.CreateImage((int)scaleSelector.Value);
                 Utilities.BitmapConverters.SaveBitmapAsPNG(toSave, stream);
                 stream.Flush();

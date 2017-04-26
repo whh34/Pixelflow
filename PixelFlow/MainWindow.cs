@@ -125,9 +125,9 @@ namespace PixelFlow
             this.GetAnimationPane().GetAnimationPreview().animator.Join();
         }
 
-        private void MainWindow_LocationChanged(object sender, EventArgs e)
+        private void drawPanePanel_Scroll(object sender, ScrollEventArgs e)
         {
-            Refresh();
+            GetDrawPane().DisplayImage();
         }
     }
 }

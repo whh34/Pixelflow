@@ -36,8 +36,8 @@ namespace Utilities
         }
 
         public GridCell[,] Grid;
-        private int _width;
-        private int _height;
+        //private int _width;
+        //private int _height;
         public Size size { get; }
         private int _Scale;
         public int Scale
