@@ -50,7 +50,7 @@ namespace PixelFlow
                 int cap = MainWindow.Instance.GetNumberOfFrames();
                 for (int i = 0; i < cap; i++)
                 {
-                    FileStream stream = new FileStream(fileNameBox.Text + (i + 1) + ".png", FileMode.Create);
+                    FileStream stream = new FileStream(exportDirectory + fileNameBox.Text + (i + 1) + ".png", FileMode.Create);
                     Bitmap toSave = MainWindow.Instance.GetDrawPane(i).Grid.CreateImage((int)scaleSelector.Value);
                     Utilities.BitmapConverters.SaveBitmapAsPNG(toSave, stream);
                     stream.Flush();
