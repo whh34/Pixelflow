@@ -65,5 +65,10 @@ namespace PixelFlow
             this.GetAnimationPane().GetAnimationPreview().animator.Interrupt();
             this.GetAnimationPane().GetAnimationPreview().animator.Join();
         }
+
+        private void toolbarPane1_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

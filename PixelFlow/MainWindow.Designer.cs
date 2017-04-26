@@ -55,6 +55,7 @@
             this.toolbarPane1.Name = "toolbarPane1";
             this.toolbarPane1.Size = new System.Drawing.Size(167, 948);
             this.toolbarPane1.TabIndex = 4;
+            this.toolbarPane1.Load += new System.EventHandler(this.toolbarPane1_Load_1);
             // 
             // drawPane1
             // 
