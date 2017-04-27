@@ -38,14 +38,26 @@ namespace PixelFlow
         private void addFrame_Click(object sender, EventArgs e)
         {
             int frameIndex = MainWindow.Instance.AddNewFrame();
+            if (frameIndex == -1)
+                return;
             framePreview1.AddNewPreview(frameIndex);
         }
 
         private void copyFrameButton_Click(object sender, EventArgs e)
         {
             int frameIndex = MainWindow.Instance.CopyFrame();
+            if (frameIndex == -1)
+                return;
             framePreview1.AddNewPreview(frameIndex);
             MainWindow.Instance.GetDrawPane().DisplayImage();
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            int toDelete = MainWindow.Instance.DeleteFrame();
+            if (toDelete == -1)
+                return;
+            framePreview1.DeletePreview(toDelete);
         }
 
         private void frame_ValueChanged(object sender, EventArgs e)

@@ -70,12 +70,10 @@ namespace PixelFlow
             {
                 int w = Frames[currentFrameIndex - 1].Grid.DisplayMap.Width / Frames[currentFrameIndex - 1].Grid.Scale;
                 int h = Frames[currentFrameIndex - 1].Grid.DisplayMap.Height / Frames[currentFrameIndex - 1].Grid.Scale;
-                newFrame = new DrawPane(w, h);
+                newFrame = new DrawPane(w, h, GetOptionsBar().GetCurrentScale());
             }
             else
-            {
                 newFrame = new DrawPane();
-            }
 
             Frames.Add(newFrame);
             drawPanePanel.Controls.Clear();
@@ -84,14 +82,30 @@ namespace PixelFlow
             return toReturn;
         }
 
+        public int AddNewFrame(Size nativeScale, int scale)
+        {
+            if (Frames.Count == 0)
+            {
+                int toReturn = Frames.Count;
+                currentFrameIndex = toReturn;
+
+                DrawPane newFrame = new DrawPane(nativeScale, scale);
+                Frames.Add(newFrame);
+                drawPanePanel.Controls.Add(newFrame);
+
+                return toReturn;
+            }
+            else
+                return -1;
+        }
+
         public int CopyFrame()
         {
-
             if (Frames.Count > 0)
             {
                 int toReturn = Frames.Count;
 
-                DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane(currentFrameIndex).Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
+                DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane().Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
                 Frames.Add(newFrame);
 
                 currentFrameIndex = toReturn;
@@ -102,6 +116,22 @@ namespace PixelFlow
             }
 
             else return AddNewFrame();
+        }
+
+        public int DeleteFrame()
+        {
+            if (Frames.Count > 0)
+            {
+                int toDelete = currentFrameIndex;
+
+                drawPanePanel.Controls.Clear();
+                Frames.RemoveAt(toDelete);
+                currentFrameIndex = -1;
+
+                return toDelete;
+            }
+            else
+                return -1;
         }
 
         // Sets the active DrawPane to an existing DrawPane in the Frame list

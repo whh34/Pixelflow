@@ -37,6 +37,17 @@ namespace Utilities
             return bitmap;
         }
 
+        public static Bitmap CreateBitmapFromFrame(BitmapFrame frame)
+        {
+            Bitmap bitmap = new Bitmap(frame.PixelWidth, frame.PixelHeight, PixelFormat.Format32bppArgb);
+            BitmapData bitmapData = bitmap.LockBits(new Rectangle(System.Drawing.Point.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            frame.CopyPixels(Int32Rect.Empty, bitmapData.Scan0, bitmapData.Height * bitmapData.Stride, bitmapData.Stride);
+            bitmap.UnlockBits(bitmapData);
+
+            return bitmap;
+        }
+
         // Creates a Bitmap from an input .png file
         public static Bitmap CreateBitmapFromPNG(Stream pngStream)
         {
@@ -49,6 +60,26 @@ namespace Utilities
             catch (FileFormatException ex)
             {
                 // Might want to do something like spawn a pop up that says the error message.
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        // Creates a List of Bitmaps from an input gif file
+        public static List<Bitmap> CreateBitmapsFromGIF(Stream gifStream)
+        {
+            try
+            {
+                List<Bitmap> toReturn = new List<Bitmap>();
+
+                GifBitmapDecoder gifDec = new GifBitmapDecoder(gifStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+                foreach (BitmapFrame bf in gifDec.Frames)
+                    toReturn.Add(CreateBitmapFromFrame(bf));
+
+                return toReturn;
+            }
+            catch (FileFormatException ex)
+            {
                 Console.WriteLine(ex.Message);
                 return null;
             }

@@ -13,6 +13,7 @@ namespace PixelFlow
     public partial class FrameButton : UserControl
     {
         private int frameIndex;
+
         public FrameButton(int index)
         {
             InitializeComponent();
@@ -29,6 +30,11 @@ namespace PixelFlow
         {
             button.BackgroundImage = MainWindow.Instance.GetDrawPane(frameIndex).GetImage();
             Refresh();
+        }
+
+        public void SetIndex(int index)
+        {
+            frameIndex = index;
         }
     }
 }

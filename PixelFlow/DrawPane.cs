@@ -56,13 +56,29 @@ namespace PixelFlow
             history.Add((Bitmap)Grid.DisplayMap.Clone());
         }
 
-        public DrawPane(int width, int height)
+        public DrawPane(int width, int height, int scale)
         {
             InitializeComponent();
             size = new Size(width, height);
+            this.scale = scale;
 
             Grid = new DrawingGrid(size.Width, size.Height, scale);
             this.Size = new Size(size.Width * scale, size.Height * scale);
+
+            frame = 1;
+
+            history = new List<Bitmap>();
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
+        }
+
+        public DrawPane(Size nativeScale, int scale)
+        {
+            InitializeComponent();
+            size = new Size(nativeScale.Width, nativeScale.Height);
+
+            Grid = new DrawingGrid(nativeScale.Width, nativeScale.Height, scale);
+            this.Size = new Size(nativeScale.Width * scale, nativeScale.Height * scale);
+            this.scale = scale;
 
             frame = 1;
 
@@ -77,6 +93,7 @@ namespace PixelFlow
             Grid = grid;
             this.size = Grid.size;
             this.Size = new Size(size.Width * Grid.Scale, size.Height * Grid.Scale);
+            scale = Grid.Scale;
 
             frame = 1;
 
@@ -89,6 +106,16 @@ namespace PixelFlow
             Grid = new DrawingGrid(pngStream, scale, nativeScale);
             this.size = Grid.size;
             this.Size = new Size(size.Width * scale, size.Height * scale);
+            this.scale = scale;
+            DisplayImage();
+        }
+
+        public void ImportGifFrame(Bitmap frame, int scale, int nativeScale)
+        {
+            Grid = new DrawingGrid(frame, scale, nativeScale);
+            this.size = Grid.size;
+            this.Size = new Size(size.Width * scale, size.Height * scale);
+            this.scale = scale;
             DisplayImage();
         }
 
