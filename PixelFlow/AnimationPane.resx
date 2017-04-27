@@ -246,4 +246,16 @@
         AElFTkSuQmCC
 </value>
   </data>
+  <data name="deleteButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAYAAACLz2ctAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAVpJREFUeF7t0LEJxAAQA0H35P5r+08UXiCUGWZgG9gHAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAgO953/envWxkdU1VXzayuqaqLxtZXVPVl42srqnqy0ZW11T1ZSOr
+        a6r6spHVNVV92cjqmqq+bGR1TVVfNrK6pqovG1ldU9WXjayuqerLRlbXVPVlI6trqvqykdU1VX3ZyOqa
+        qr5sZHVNVV82srqmqi8bWV1T1ZeNrK6p6stGVtdU9WUjq2uq+rKR1TVVfdnI6pqqvmxkdU1VXzayuqaq
+        LxtZXVPVl42srqnqy0ZW11T1ZSOra6r6spHVNVV92cjqmqq+bGR1TVVfNrK6pqovG1ldU9WXjayuqerL
+        RlbXVPVlI6trqvqykdU1VX3ZCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBnPM8f
+        P4rtHqbk8PcAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>
