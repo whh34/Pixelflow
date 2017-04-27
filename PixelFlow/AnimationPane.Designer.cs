@@ -39,10 +39,10 @@
             this.addFrame = new System.Windows.Forms.Button();
             this.frame = new System.Windows.Forms.NumericUpDown();
             this.frameText = new System.Windows.Forms.TextBox();
+            this.copyFrameButton = new System.Windows.Forms.Button();
             this.layerPreview1 = new PixelFlow.LayerPreview();
             this.framePreview1 = new PixelFlow.FramePreview();
             this.animationPreview1 = new PixelFlow.AnimationPreview();
-            this.copyFrameButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.frameRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.frame)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +50,7 @@
             // playPause
             // 
             this.playPause.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("playPause.BackgroundImage")));
-            this.playPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.playPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.playPause.Location = new System.Drawing.Point(243, 350);
             this.playPause.Name = "playPause";
             this.playPause.Size = new System.Drawing.Size(40, 40);
@@ -62,7 +62,7 @@
             // stepBackward
             // 
             this.stepBackward.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("stepBackward.BackgroundImage")));
-            this.stepBackward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.stepBackward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.stepBackward.Location = new System.Drawing.Point(113, 350);
             this.stepBackward.Name = "stepBackward";
             this.stepBackward.Size = new System.Drawing.Size(40, 40);
@@ -74,7 +74,7 @@
             // stepForward
             // 
             this.stepForward.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("stepForward.BackgroundImage")));
-            this.stepForward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.stepForward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.stepForward.Location = new System.Drawing.Point(373, 350);
             this.stepForward.Name = "stepForward";
             this.stepForward.Size = new System.Drawing.Size(40, 40);
@@ -105,11 +105,13 @@
             // 
             // addFrame
             // 
-            this.addFrame.Location = new System.Drawing.Point(404, 400);
+            this.addFrame.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("addFrame.BackgroundImage")));
+            this.addFrame.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.addFrame.Location = new System.Drawing.Point(402, 400);
             this.addFrame.Name = "addFrame";
-            this.addFrame.Size = new System.Drawing.Size(25, 27);
+            this.addFrame.Size = new System.Drawing.Size(30, 30);
             this.addFrame.TabIndex = 8;
-            this.addFrame.Text = "+";
+            this.animationToolTips.SetToolTip(this.addFrame, "Add new frame");
             this.addFrame.UseVisualStyleBackColor = true;
             this.addFrame.Click += new System.EventHandler(this.addFrame_Click);
             // 
@@ -144,6 +146,18 @@
             this.frameText.TabIndex = 10;
             this.frameText.Text = "Frame";
             // 
+            // copyFrameButton
+            // 
+            this.copyFrameButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("copyFrameButton.BackgroundImage")));
+            this.copyFrameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copyFrameButton.Location = new System.Drawing.Point(402, 434);
+            this.copyFrameButton.Name = "copyFrameButton";
+            this.copyFrameButton.Size = new System.Drawing.Size(30, 30);
+            this.copyFrameButton.TabIndex = 13;
+            this.animationToolTips.SetToolTip(this.copyFrameButton, "Duplicate selected frame");
+            this.copyFrameButton.UseVisualStyleBackColor = true;
+            this.copyFrameButton.Click += new System.EventHandler(this.copyFrameButton_Click);
+            // 
             // layerPreview1
             // 
             this.layerPreview1.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -169,16 +183,6 @@
             this.animationPreview1.Name = "animationPreview1";
             this.animationPreview1.Size = new System.Drawing.Size(300, 300);
             this.animationPreview1.TabIndex = 0;
-            // 
-            // copyFrameButton
-            // 
-            this.copyFrameButton.Location = new System.Drawing.Point(404, 434);
-            this.copyFrameButton.Name = "copyFrameButton";
-            this.copyFrameButton.Size = new System.Drawing.Size(25, 23);
-            this.copyFrameButton.TabIndex = 13;
-            this.copyFrameButton.Text = "c";
-            this.copyFrameButton.UseVisualStyleBackColor = true;
-            this.copyFrameButton.Click += new System.EventHandler(this.copyFrameButton_Click);
             // 
             // AnimationPane
             // 

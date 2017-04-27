@@ -51,6 +51,20 @@ namespace PixelFlow
             history.Add((Bitmap)Grid.DisplayMap.Clone());
         }
 
+        public DrawPane(int width, int height)
+        {
+            InitializeComponent();
+            size = new Size(width, height);
+
+            Grid = new DrawingGrid(size.Width, size.Height, scale);
+            this.Size = new Size(size.Width * scale, size.Height * scale);
+
+            frame = 1;
+
+            history = new List<Bitmap>();
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
+        }
+
         public DrawPane(DrawingGrid grid)
         {
             InitializeComponent();
@@ -210,6 +224,14 @@ namespace PixelFlow
             secondaryAlpha = a;
         }
 
+        public bool NoHotkeysPressed()
+        {
+            bool keysDown = System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftAlt) ||
+                            System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl);
+
+            return !keysDown;
+        }
+
         private void DrawPane_MouseDown(object sender, MouseEventArgs e)
         {
             
@@ -227,35 +249,35 @@ namespace PixelFlow
                 actingSecondaryColor = Color.FromArgb(primaryAlpha, primaryColor);
             }
 
-            if (tool == "pencil")
+            if (tool == "pencil" && NoHotkeysPressed())
             {
                 DrawPencilDown(e);
             }
-            else if (tool == "line")
+            else if (tool == "line" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
             {
                 DrawLineDown(e);
             }
-            else if (tool == "circle")
+            else if (tool == "circle" && NoHotkeysPressed())
             {
                 DrawCircleDown(e);
             }
-            else if (tool == "rectangle")
+            else if (tool == "rectangle" && NoHotkeysPressed())
             {
                 DrawRectangleDown(e);
             }
-            else if (tool == "gradient")
+            else if (tool == "gradient" && NoHotkeysPressed())
             {
                 DrawGradientDown(e);
             }
-            else if (tool == "fill")
+            else if (tool == "fill" && NoHotkeysPressed())
             {
                 //DrawFillDown(e);
             }
-            else if (tool == "select")
+            else if (tool == "select" && NoHotkeysPressed())
             {
                 //DrawSelectDown(e);
             }
-            else if (tool == "eyedropper")
+            else if (tool == "eyedropper" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftAlt))
             {
                 DrawEyedropperDown(e);
             }
@@ -270,35 +292,35 @@ namespace PixelFlow
 
             string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
 
-            if (tool == "pencil")
+            if (tool == "pencil" && NoHotkeysPressed())
             {
                 DrawPencilMove(e);
             }
-            else if (tool == "line")
+            else if (tool == "line" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
             {
                 DrawLineMove(e);
             }
-            else if (tool == "circle")
+            else if (tool == "circle" && NoHotkeysPressed())
             {
                 DrawCircleMove(e);
             }
-            else if (tool == "rectangle")
+            else if (tool == "rectangle" && NoHotkeysPressed())
             {
                 DrawRectangleMove(e);
             }
-            else if (tool == "gradient")
+            else if (tool == "gradient" && NoHotkeysPressed())
             {
                 DrawGradientMove(e);
             }
-            else if (tool == "fill")
+            else if (tool == "fill" && NoHotkeysPressed())
             {
                 //DrawFillMove(e);
             }
-            else if (tool == "select")
+            else if (tool == "select" && NoHotkeysPressed())
             {
                 //DrawSelectMove(e);
             }
-            else if (tool == "eyedropper")
+            else if (tool == "eyedropper" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftAlt))
             {
                 DrawEyedropperMove(e);
             }
@@ -312,35 +334,35 @@ namespace PixelFlow
         {
             string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
 
-            if (tool == "pencil")
+            if (tool == "pencil" && NoHotkeysPressed())
             {
                 DrawPencilUp(e);
             }
-            else if (tool == "line")
+            else if (tool == "line" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftCtrl))
             {
                 DrawLineUp(e);
             }
-            else if (tool == "circle")
+            else if (tool == "circle" && NoHotkeysPressed())
             {
                 DrawCircleUp(e);
             }
-            else if (tool == "rectangle")
+            else if (tool == "rectangle" && NoHotkeysPressed())
             {
                 DrawRectangleUp(e);
             }
-            else if (tool == "gradient")
+            else if (tool == "gradient" && NoHotkeysPressed())
             {
                 DrawGradientUp(e);
             }
-            else if (tool == "fill")
+            else if (tool == "fill" && NoHotkeysPressed())
             {
                 DrawFillUp(e);
             }
-            else if (tool == "select")
+            else if (tool == "select" && NoHotkeysPressed())
             {
                 //DrawSelectUp(e);
             }
-            else if (tool == "eyedropper")
+            else if (tool == "eyedropper" && NoHotkeysPressed() || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftAlt))
             {
                 DrawEyedropperUp(e);
             }

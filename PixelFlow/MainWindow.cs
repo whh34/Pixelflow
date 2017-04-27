@@ -62,7 +62,20 @@ namespace PixelFlow
         {
             int toReturn = Frames.Count;
             currentFrameIndex = toReturn;
-            DrawPane newFrame = new DrawPane();
+            DrawPane newFrame;
+
+            // Makes the new frame the previous frame's size
+            if (Frames.Count > 0)
+            {
+                int w = Frames[currentFrameIndex - 1].Grid.DisplayMap.Width / Frames[currentFrameIndex - 1].Grid.Scale;
+                int h = Frames[currentFrameIndex - 1].Grid.DisplayMap.Height / Frames[currentFrameIndex - 1].Grid.Scale;
+                newFrame = new DrawPane(w, h);
+            }
+            else
+            {
+                newFrame = new DrawPane();
+            }
+
             Frames.Add(newFrame);
             drawPanePanel.Controls.Clear();
             drawPanePanel.Controls.Add(newFrame);
@@ -72,16 +85,22 @@ namespace PixelFlow
 
         public int CopyFrame()
         {
-            int toReturn = Frames.Count;
 
-            DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane(currentFrameIndex).Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
-            Frames.Add(newFrame);
+            if (Frames.Count > 0)
+            {
+                int toReturn = Frames.Count;
 
-            currentFrameIndex = toReturn;
-            drawPanePanel.Controls.Clear();
-            drawPanePanel.Controls.Add(newFrame);
+                DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane(currentFrameIndex).Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
+                Frames.Add(newFrame);
 
-            return toReturn;
+                currentFrameIndex = toReturn;
+                drawPanePanel.Controls.Clear();
+                drawPanePanel.Controls.Add(newFrame);
+
+                return toReturn;
+            }
+
+            else return AddNewFrame();
         }
 
         // Sets the active DrawPane to an existing DrawPane in the Frame list

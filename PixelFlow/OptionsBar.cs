@@ -19,7 +19,10 @@ namespace PixelFlow
 
         public OptionsBar()
         {
-            InitializeComponent();  
+            InitializeComponent();
+
+            this.undoButton.BackColor = Color.LightGray;
+            this.redoButton.BackColor = Color.LightGray;
         }
 
         public int GetCurrentScale()
@@ -70,6 +73,16 @@ namespace PixelFlow
         {
             ImportControl imp = new ImportControl();
             DialogueForm dialogue = new DialogueForm(imp, "Import");
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            undoButton_Click(sender, e);
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            redoButton_Click(sender, e);
         }
     }
 }
