@@ -58,8 +58,8 @@ namespace PixelFlow
                 {
                     if (frameRate != 0)
                     {
+                        
                         System.Threading.Thread.Sleep(1000 / frameRate);
-
                         MethodInvoker mi = delegate ()
                         {
                             StepToFrame(currentFrame + 1);
@@ -68,14 +68,7 @@ namespace PixelFlow
                     }
                     else
                     {
-                        try
-                        {
-                            System.Threading.Thread.Sleep(1000);
-                        }
-                        catch (System.Threading.ThreadInterruptedException e)
-                        {
-                            //no op
-                        }
+                        System.Threading.Thread.Sleep(1000);
                     }
                 }          
             }

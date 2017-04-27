@@ -121,8 +121,7 @@ namespace PixelFlow
             // this is necessary to close the animating thread. There's probably a better way
 
             this.GetAnimationPane().GetAnimationPreview().animating = false;
-            this.GetAnimationPane().GetAnimationPreview().animator.Interrupt();
-            this.GetAnimationPane().GetAnimationPreview().animator.Join();
+            
         }
 
         private void MainWindow_LocationChanged(object sender, EventArgs e)

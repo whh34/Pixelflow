@@ -43,9 +43,9 @@ namespace PixelFlow
         {
             InitializeComponent();
             size = new Size(32, 32);
-            
+
             Grid = new DrawingGrid(size.Width, size.Height, scale);
-            this.Size = new Size(size.Width * scale, size.Height * scale); 
+            this.Size = new Size(size.Width * scale, size.Height * scale);
 
             frame = 1;
 
@@ -95,7 +95,7 @@ namespace PixelFlow
 
         private void DrawPane_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         public void Undo()
@@ -109,7 +109,7 @@ namespace PixelFlow
             //Grid = new DrawingGrid(history[currentHistory].Width, history[currentHistory].Height, scale);
             Grid.DisplayMap = history[currentHistory];
             DisplayImage(history[currentHistory]);
-            
+
             SetScale(scale);
 
             Debug.WriteLine(history);
@@ -179,13 +179,13 @@ namespace PixelFlow
 
         /*
          * Overload that takes a point instead of 2 ints
-         */ 
+         */
         public Color GetPixel(Point p)
         {
             return GetPixel(p.X, p.Y);
         }
-        
-        
+
+
         public Bitmap GetImage()
         {
             return Grid.DisplayMap;
@@ -196,7 +196,7 @@ namespace PixelFlow
         {
             // This might need some work...
         }
-        
+
 
         public void SetPrimaryColor(Color c)
         {
@@ -225,7 +225,7 @@ namespace PixelFlow
 
         private void DrawPane_MouseDown(object sender, MouseEventArgs e)
         {
-            
+
             dragable = true;
             string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
 
@@ -402,7 +402,7 @@ namespace PixelFlow
 
         private void DrawPencilMove(MouseEventArgs e)
         {
-            
+
             if (dragable == true)
             {
                 DrawLineUp(e);
@@ -494,7 +494,6 @@ namespace PixelFlow
                 ColorPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
             }
 
-            DisplayImage();
         }
 
 
@@ -514,39 +513,57 @@ namespace PixelFlow
         }
         private void DrawCircleUp(MouseEventArgs e)
         {
+            /* Drake's implementation */
+            //int minX = Math.Min(drawX, e.X) / scale;
+            //int maxX = Math.Max(drawX, e.X) / scale + 1;
+            //int minY = Math.Min(drawY, e.Y) / scale;
+            //int maxY = Math.Max(drawY, e.Y) / scale + 1;
+            //
+            //int cenX = (maxX + minX) / 2;
+            //int cenY = (maxY + minY) / 2;
+            //
+            //double xRad = (double)(maxX - minX) / 2.0;
+            //double yRad = (double)(maxY - minY) / 2.0;
+            //
+            ///*double step = 10.0 / (xRad + yRad);
+            //int numSteps = (int)(2 * Math.PI / step) + 1;*/
+            //
+            //int lastX = (int)(cenX + Math.Cos(/*step*/.1) * xRad);
+            //int lastY = (int)(cenY + Math.Sin(/*step*/.1) * yRad);
+            //
+            //for (double theta = .2; theta < 6.4; theta+= .1)
+            ////for (int i = 1; i < numSteps + 2; i++) 
+            //{
+            //    //double theta = step * (double)i;
+            //    int x = (int)(cenX + Math.Cos(theta) * xRad);
+            //    int y = (int)(cenY + Math.Sin(theta) * yRad);
+            //
+            //    if (x != lastX || y != lastY)
+            //    {
+            //        DrawLine(lastX, lastY, x, y);
+            //    }
+            //
+            //    lastX = x;
+            //    lastY = y;
+            //
+            //}
+            //
 
-            int minX = Math.Min(drawX, e.X) / scale;
-            int maxX = Math.Max(drawX, e.X) / scale + 1;
-            int minY = Math.Min(drawY, e.Y) / scale;
-            int maxY = Math.Max(drawY, e.Y) / scale + 1;
+            Point p0 = new Point(Math.Min(drawX, e.X) / scale, Math.Min(drawY, e.Y) / scale);
+            Point p1 = new Point(Math.Max(drawX, e.X) / scale, Math.Max(drawY, e.Y) / scale);
+            double cX = (double)(p0.X + p1.X) / 2.0;
+            double cY = (double)(p0.Y + p1.Y) / 2.0;
+            int h = p1.Y - p0.Y;
+            int w = p1.X - p0.X;
 
-            int cenX = (maxX + minX) / 2;
-            int cenY = (maxY + minY) / 2;
-
-            double xRad = (double)(maxX - minX) / 2.0;
-            double yRad = (double)(maxY - minY) / 2.0;
-
-            /*double step = 10.0 / (xRad + yRad);
-            int numSteps = (int)(2 * Math.PI / step) + 1;*/
-
-            int lastX = (int)(cenX + Math.Cos(/*step*/.1) * xRad);
-            int lastY = (int)(cenY + Math.Sin(/*step*/.1) * yRad);
-
-            for (double theta = .2; theta < 6.4; theta+= .1)
-            //for (int i = 1; i < numSteps + 2; i++) 
+            int numSteps = 16 * Math.Max(w, h); //The number of steps will never exceed the perimiter of the bounding box
+            double deltaR = 2 * Math.PI / numSteps;
+            for (int n = 0; n < numSteps; n++)
             {
-                //double theta = step * (double)i;
-                int x = (int)(cenX + Math.Cos(theta) * xRad);
-                int y = (int)(cenY + Math.Sin(theta) * yRad);
-
-                if (x != lastX || y != lastY)
-                {
-                    DrawLine(lastX, lastY, x, y);
-                }
-
-                lastX = x;
-                lastY = y;
-
+                double r = n * deltaR;
+                int x = (int)Math.Round(Math.Cos(r) * w / 2 + cX);
+                int y = (int)Math.Round(Math.Sin(r) * h / 2 + cY);
+                ColorPixel(x, y, actingPrimaryColor);
             }
 
             DisplayImage();
@@ -604,8 +621,52 @@ namespace PixelFlow
 
         private void DrawGradientUp(MouseEventArgs e)
         {
+            int sx = drawX / scale;
+            int sy = drawY / scale;
+            int fx = e.X / scale;
+            int fy = e.Y / scale;
 
+            int vfx = fx - sx;
+            int vfy = fy - sy;
+
+            Color p, s;
+            p = actingPrimaryColor;
+            s = actingSecondaryColor;
+
+            for (int x = 0; x < size.Width; x++)
+            {
+                for (int y = 0; y < size.Height; y++)
+                {
+                    int vx = x - sx;
+                    int vy = y - sy;
+
+                    double mag = ((double)(vx * vfx + vy * vfy) / (vfx * vfx + vfy * vfy));
+                    Color c;
+                    if (mag <= 0)
+                    {
+                        c = p;
+                    }
+                    else if (mag >= 1)
+                    {
+                        c = s;
+                    }
+                    else
+                    {
+                        byte r, g, b;
+                        int a;
+                        r = (byte)(s.R * mag + p.R * (1 - mag));
+                        g = (byte)(s.G * mag + p.G * (1 - mag));
+                        b = (byte)(s.B * mag + p.B * (1 - mag));
+                        a = (int)(s.A * mag + p.A * (1 - mag));
+                        c = Color.FromArgb(a, r, g, b);
+                    }
+                    ColorPixel(x, y, c);
+                }
+            }
+            DisplayImage();
         }
+
+        
 
 
         /***********************************************************************/
