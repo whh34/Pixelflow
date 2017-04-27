@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace PixelFlow
 {
@@ -154,12 +155,26 @@ namespace PixelFlow
             // this is necessary to close the animating thread. There's probably a better way
 
             this.GetAnimationPane().GetAnimationPreview().animating = false;
-            
+
         }
 
         private void drawPanePanel_Scroll(object sender, ScrollEventArgs e)
         {
             GetDrawPane().DisplayImage();
+        }
+
+        // Not working, no actions are made when the input is pressed
+        public void MainWindow_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Z/* && Control.ModifierKeys == Keys.Control*/) // ctrl + z
+            {
+                Frames[currentFrameIndex].Undo();
+            }
+
+            if (e.KeyCode == Keys.Y/* && Control.ModifierKeys == Keys.Control*/) // ctrl + y
+            {
+                Frames[currentFrameIndex].Redo();
+            }
         }
     }
 }
