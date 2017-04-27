@@ -51,6 +51,20 @@ namespace PixelFlow
             history.Add((Bitmap)Grid.DisplayMap.Clone());
         }
 
+        public DrawPane(DrawingGrid grid)
+        {
+            InitializeComponent();
+
+            Grid = grid;
+            this.size = Grid.size;
+            this.Size = new Size(size.Width * Grid.Scale, size.Height * Grid.Scale);
+
+            frame = 1;
+
+            history = new List<Bitmap>();
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
+        }
+
         public void ImportPNG(Stream pngStream, int scale, int nativeScale)
         {
             Grid = new DrawingGrid(pngStream, scale, nativeScale);

@@ -70,6 +70,20 @@ namespace PixelFlow
             return toReturn;
         }
 
+        public int CopyFrame()
+        {
+            int toReturn = Frames.Count;
+
+            DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane(currentFrameIndex).Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
+            Frames.Add(newFrame);
+
+            currentFrameIndex = toReturn;
+            drawPanePanel.Controls.Clear();
+            drawPanePanel.Controls.Add(newFrame);
+
+            return toReturn;
+        }
+
         // Sets the active DrawPane to an existing DrawPane in the Frame list
         public void SetDrawPane(int index)
         {
