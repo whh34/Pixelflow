@@ -782,7 +782,7 @@ namespace PixelFlow
             if (fY < sY)
             {
                 int tmp = fY;
-                fX = sY;
+                fY = sY;
                 sY = tmp;
             }
             Rectangle newRegion = new Rectangle(sX, sY, fX - sX, fY - sY);
