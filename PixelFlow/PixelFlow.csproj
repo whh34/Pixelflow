@@ -33,9 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.5.502\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +94,18 @@
     <Compile Include="FramePreview.Designer.cs">
       <DependentUpon>FramePreview.cs</DependentUpon>
     </Compile>
+    <Compile Include="GifExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GifExport.Designer.cs">
+      <DependentUpon>GifExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImportControl.Designer.cs">
+      <DependentUpon>ImportControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="LayerPreview.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,6 +159,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FramePreview.resx">
       <DependentUpon>FramePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GifExport.resx">
+      <DependentUpon>GifExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportControl.resx">
+      <DependentUpon>ImportControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LayerPreview.resx">
       <DependentUpon>LayerPreview.cs</DependentUpon>

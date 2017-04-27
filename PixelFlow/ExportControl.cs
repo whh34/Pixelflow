@@ -25,7 +25,15 @@ namespace PixelFlow
             if (index == 0)
             {
                 PngExport pex = new PngExport();
+                exportPanel.Controls.Clear();
                 exportPanel.Controls.Add(pex);
+            }
+            // Save as .gif selected
+            else if (index == 1)
+            {
+                GifExport gex = new GifExport();
+                exportPanel.Controls.Clear();
+                exportPanel.Controls.Add(gex);
             }
         }
     }

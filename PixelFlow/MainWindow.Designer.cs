@@ -77,6 +77,7 @@
             this.drawPanePanel.Name = "drawPanePanel";
             this.drawPanePanel.Size = new System.Drawing.Size(639, 615);
             this.drawPanePanel.TabIndex = 7;
+            this.drawPanePanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.drawPanePanel_Scroll);
             // 
             // MainWindow
             // 
@@ -92,7 +93,6 @@
             this.Name = "MainWindow";
             this.Text = "PixelFlow";
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.LocationChanged += new System.EventHandler(this.MainWindow_LocationChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 

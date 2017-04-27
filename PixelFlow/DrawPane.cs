@@ -53,7 +53,21 @@ namespace PixelFlow
             selectedRegion = new Rectangle(-1, -1, Grid.size.Width + 1, Grid.size.Height + 1);
 
             history = new List<Bitmap>();
-            history.Add(Grid.DisplayMap);
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
+        }
+
+        public DrawPane(DrawingGrid grid)
+        {
+            InitializeComponent();
+
+            Grid = grid;
+            this.size = Grid.size;
+            this.Size = new Size(size.Width * Grid.Scale, size.Height * Grid.Scale);
+
+            frame = 1;
+
+            history = new List<Bitmap>();
+            history.Add((Bitmap)Grid.DisplayMap.Clone());
         }
 
         public void ImportPNG(Stream pngStream, int scale, int nativeScale)
@@ -75,6 +89,15 @@ namespace PixelFlow
             Graphics g = CreateGraphics();
             g.DrawImage(Grid.DisplayMap, 0, 0, Grid.DisplayMap.Width, Grid.DisplayMap.Height);
             drawSelection();
+            /*for (int y = 0; y < size.Height; y++)
+            {
+                g.DrawLine(new Pen(Color.FromArgb(0x80, 0x80, 0x80, 0x80)), new Point(0, y * scale), new Point(Size.Width, y * scale));
+            }
+            for (int x = 0; x < size.Width; x++)
+            {
+                g.DrawLine(new Pen(Color.FromArgb(0x80, 0x80, 0x80, 0x80)), new Point(x * scale, 0), new Point(x * scale, Size.Height));
+            }*/
+           
             int index = MainWindow.Instance.GetCurrentFrameIndex();
             MainWindow.Instance.GetAnimationPane().GetFramePreview().GetPreviewButton(index).UpdatePreviewImage();
         }
@@ -107,12 +130,9 @@ namespace PixelFlow
             }
 
             //Grid = new DrawingGrid(history[currentHistory].Width, history[currentHistory].Height, scale);
-            Grid.DisplayMap = history[currentHistory];
-            DisplayImage(history[currentHistory]);
-
-            SetScale(scale);
-
-            Debug.WriteLine(history);
+            //Grid.DisplayMap = history[currentHistory];
+            Grid = new DrawingGrid(history[currentHistory], scale, scale);
+            DisplayImage();
         }
 
         public void Redo()
@@ -122,12 +142,8 @@ namespace PixelFlow
             {
                 currentHistory = history.Count - 1;
             }
-            Grid.DisplayMap = history[currentHistory];
-            DisplayImage(history[currentHistory]);
-
-            SetScale(scale);
-
-            Debug.WriteLine(history);
+            Grid = new DrawingGrid(history[currentHistory], scale, scale);
+            DisplayImage();
         }
 
         public void SetScale(int newScale)
@@ -379,7 +395,13 @@ namespace PixelFlow
             // update history
             if (currentHistory != history.Count - 1)
             {
-                history.RemoveRange(currentHistory, history.Count - 1);
+                List<Bitmap> tempHistory = new List<Bitmap>();
+                for (int i = 0; i < currentHistory + 1; i++)
+                {
+                    tempHistory.Add(history[i]);
+                }
+
+                history = tempHistory;
             }
 
             history.Add((Bitmap)Grid.DisplayMap.Clone());
@@ -493,8 +515,8 @@ namespace PixelFlow
                 y += dy;
                 ColorPixel((int)(x + 0.5), (int)(y + 0.5), actingPrimaryColor);
             }
-
         }
+
 
 
         /***********************************************************************/
@@ -633,9 +655,9 @@ namespace PixelFlow
             p = actingPrimaryColor;
             s = actingSecondaryColor;
 
-            for (int x = 0; x < size.Width; x++)
+            for (int x = Math.Max(selectedRegion.X, 0); x < Math.Min(selectedRegion.Right + 1, size.Width); x++)
             {
-                for (int y = 0; y < size.Height; y++)
+                for (int y = Math.Max(selectedRegion.Y, 0); y < Math.Min(selectedRegion.Bottom + 1, size.Height); y++)
                 {
                     int vx = x - sx;
                     int vy = y - sy;
@@ -657,7 +679,7 @@ namespace PixelFlow
                         r = (byte)(s.R * mag + p.R * (1 - mag));
                         g = (byte)(s.G * mag + p.G * (1 - mag));
                         b = (byte)(s.B * mag + p.B * (1 - mag));
-                        a = (int)(s.A * mag + p.A * (1 - mag));
+                        a = (byte)(s.A * mag + p.A * (1 - mag));
                         c = Color.FromArgb(a, r, g, b);
                     }
                     ColorPixel(x, y, c);
