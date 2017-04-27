@@ -171,6 +171,7 @@ namespace PixelFlow
             this.fillTool.BackColor = Color.LightGray;
             this.selectTool.BackColor = Color.LightGray;
             this.eyedropperTool.BackColor = Color.LightGray;
+            this.dragTool.BackColor = Color.LightGray;
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
