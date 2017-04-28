@@ -117,10 +117,6 @@ namespace Utilities
                 collection[i].AnimationDelay = delay;
             }
 
-            QuantizeSettings settings = new QuantizeSettings();
-            settings.Colors = 256;
-            collection.Quantize(settings);
-
             collection.Optimize();
 
             collection.Write(path);

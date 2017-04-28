@@ -19,11 +19,6 @@ namespace Utilities
         {
             public Color color { get; set; }
 
-            public GridCell(int r = 255, int g = 255, int b = 255, int a = 255)
-            {
-                color = Color.FromArgb(a, r, g, b);
-            }
-
             public GridCell(Color color)
             {
                 this.color = color;
@@ -133,17 +128,6 @@ namespace Utilities
             }
 
             return b;
-        }
-
-        // Creates a BitmapSource object from the current drawing
-        public BitmapSource CreateSource(int scale)
-        {
-            Bitmap temp = CreateImage(scale);
-            var bitmapData = temp.LockBits(new Rectangle(0, 0, temp.Width, temp.Height), ImageLockMode.ReadOnly, temp.PixelFormat);
-            var bitmapSource = BitmapSource.Create(bitmapData.Width, bitmapData.Height, 96, 96, System.Windows.Media.PixelFormats.Bgra32, null, bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-
-            temp.UnlockBits(bitmapData);
-            return bitmapSource;
         }
 
         //Copies a region to another grid
