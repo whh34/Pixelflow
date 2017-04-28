@@ -24,7 +24,7 @@ namespace Tests
 
             // color a pixel within the range of the bitmap
             d.ColorPixel(new Point(0, 0), Color.Blue);
-            Assert.AreEqual(b.GetPixel(0, 0), Color.Blue);
+            Assert.AreEqual(d.GetPixel(0, 0), Color.Blue);
 
             // color a pixel outside the range of the bitmap
             d.ColorPixel(new Point(11, 11), Color.Blue); // show this won't crash
