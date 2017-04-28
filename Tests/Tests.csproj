@@ -34,6 +34,7 @@
       <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -50,6 +51,7 @@
     <Compile Include="DrawPaneUtilitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolTests.cs" />
+    <Compile Include="UtilitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PixelFlow\PixelFlow.csproj">
