@@ -288,7 +288,8 @@ namespace PixelFlow
             return !keysDown;
         }
 
-        private void DrawPane_MouseDown(object sender, MouseEventArgs e)
+        // was private, changed to public for tests
+        public void DrawPane_MouseDown(object sender, MouseEventArgs e)
         {
 
             dragable = true;
