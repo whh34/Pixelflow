@@ -187,11 +187,13 @@
             // 
             // deleteButton
             // 
+            this.deleteButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("deleteButton.BackgroundImage")));
+            this.deleteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.deleteButton.Location = new System.Drawing.Point(402, 468);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(30, 30);
             this.deleteButton.TabIndex = 14;
-            this.deleteButton.Text = "D";
+            this.animationToolTips.SetToolTip(this.deleteButton, "Delete selected frame");
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 

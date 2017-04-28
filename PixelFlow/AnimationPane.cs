@@ -21,6 +21,7 @@ namespace PixelFlow
             this.stepForward.BackColor = Color.LightGray;
             this.addFrame.BackColor = Color.LightGray;
             this.copyFrameButton.BackColor = Color.LightGray;
+            this.deleteButton.BackColor = Color.LightGray;
 
             //this.frame.Maximum = this.framesPreview1.numFrames;
         }
