@@ -34,6 +34,11 @@ namespace PixelFlow
             return this.activeTool;
         }
 
+        public void SetActiveTool(string tool)
+        {
+            this.activeTool = tool;
+        }
+
         /*
          * Allows the setting of the primary color through a color dialog
          * Passes the color information to the DrawPane
@@ -171,6 +176,7 @@ namespace PixelFlow
             this.fillTool.BackColor = Color.LightGray;
             this.selectTool.BackColor = Color.LightGray;
             this.eyedropperTool.BackColor = Color.LightGray;
+            this.dragTool.BackColor = Color.LightGray;
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)

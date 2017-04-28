@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace PixelFlow
 {
@@ -69,12 +70,10 @@ namespace PixelFlow
             {
                 int w = Frames[currentFrameIndex - 1].Grid.DisplayMap.Width / Frames[currentFrameIndex - 1].Grid.Scale;
                 int h = Frames[currentFrameIndex - 1].Grid.DisplayMap.Height / Frames[currentFrameIndex - 1].Grid.Scale;
-                newFrame = new DrawPane(w, h);
+                newFrame = new DrawPane(w, h, GetOptionsBar().GetCurrentScale());
             }
             else
-            {
                 newFrame = new DrawPane();
-            }
 
             Frames.Add(newFrame);
             drawPanePanel.Controls.Clear();
@@ -83,14 +82,30 @@ namespace PixelFlow
             return toReturn;
         }
 
+        public int AddNewFrame(Size nativeScale, int scale)
+        {
+            if (Frames.Count == 0)
+            {
+                int toReturn = Frames.Count;
+                currentFrameIndex = toReturn;
+
+                DrawPane newFrame = new DrawPane(nativeScale, scale);
+                Frames.Add(newFrame);
+                drawPanePanel.Controls.Add(newFrame);
+
+                return toReturn;
+            }
+            else
+                return -1;
+        }
+
         public int CopyFrame()
         {
-
             if (Frames.Count > 0)
             {
                 int toReturn = Frames.Count;
 
-                DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane(currentFrameIndex).Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
+                DrawPane newFrame = new DrawPane(new Utilities.DrawingGrid(GetDrawPane().Grid.DisplayMap, GetOptionsBar().GetCurrentScale(), GetOptionsBar().GetCurrentScale()));
                 Frames.Add(newFrame);
 
                 currentFrameIndex = toReturn;
@@ -101,6 +116,22 @@ namespace PixelFlow
             }
 
             else return AddNewFrame();
+        }
+
+        public int DeleteFrame()
+        {
+            if (Frames.Count > 0)
+            {
+                int toDelete = currentFrameIndex;
+
+                drawPanePanel.Controls.Clear();
+                Frames.RemoveAt(toDelete);
+                currentFrameIndex = -1;
+
+                return toDelete;
+            }
+            else
+                return -1;
         }
 
         // Sets the active DrawPane to an existing DrawPane in the Frame list
@@ -154,12 +185,26 @@ namespace PixelFlow
             // this is necessary to close the animating thread. There's probably a better way
 
             this.GetAnimationPane().GetAnimationPreview().animating = false;
-            
+
         }
 
         private void drawPanePanel_Scroll(object sender, ScrollEventArgs e)
         {
             GetDrawPane().DisplayImage();
+        }
+
+        // Not working, no actions are made when the input is pressed
+        public void MainWindow_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Z/* && Control.ModifierKeys == Keys.Control*/) // ctrl + z
+            {
+                Frames[currentFrameIndex].Undo();
+            }
+
+            if (e.KeyCode == Keys.Y/* && Control.ModifierKeys == Keys.Control*/) // ctrl + y
+            {
+                Frames[currentFrameIndex].Redo();
+            }
         }
     }
 }

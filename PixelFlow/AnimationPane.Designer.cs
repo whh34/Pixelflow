@@ -37,12 +37,13 @@
             this.frameRateText = new System.Windows.Forms.TextBox();
             this.animationToolTips = new System.Windows.Forms.ToolTip(this.components);
             this.addFrame = new System.Windows.Forms.Button();
+            this.copyFrameButton = new System.Windows.Forms.Button();
             this.frame = new System.Windows.Forms.NumericUpDown();
             this.frameText = new System.Windows.Forms.TextBox();
-            this.copyFrameButton = new System.Windows.Forms.Button();
             this.layerPreview1 = new PixelFlow.LayerPreview();
             this.framePreview1 = new PixelFlow.FramePreview();
             this.animationPreview1 = new PixelFlow.AnimationPreview();
+            this.deleteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.frameRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.frame)).BeginInit();
             this.SuspendLayout();
@@ -115,6 +116,18 @@
             this.addFrame.UseVisualStyleBackColor = true;
             this.addFrame.Click += new System.EventHandler(this.addFrame_Click);
             // 
+            // copyFrameButton
+            // 
+            this.copyFrameButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("copyFrameButton.BackgroundImage")));
+            this.copyFrameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copyFrameButton.Location = new System.Drawing.Point(402, 434);
+            this.copyFrameButton.Name = "copyFrameButton";
+            this.copyFrameButton.Size = new System.Drawing.Size(30, 30);
+            this.copyFrameButton.TabIndex = 13;
+            this.animationToolTips.SetToolTip(this.copyFrameButton, "Duplicate selected frame");
+            this.copyFrameButton.UseVisualStyleBackColor = true;
+            this.copyFrameButton.Click += new System.EventHandler(this.copyFrameButton_Click);
+            // 
             // frame
             // 
             this.frame.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -146,18 +159,6 @@
             this.frameText.TabIndex = 10;
             this.frameText.Text = "Frame";
             // 
-            // copyFrameButton
-            // 
-            this.copyFrameButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("copyFrameButton.BackgroundImage")));
-            this.copyFrameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.copyFrameButton.Location = new System.Drawing.Point(402, 434);
-            this.copyFrameButton.Name = "copyFrameButton";
-            this.copyFrameButton.Size = new System.Drawing.Size(30, 30);
-            this.copyFrameButton.TabIndex = 13;
-            this.animationToolTips.SetToolTip(this.copyFrameButton, "Duplicate selected frame");
-            this.copyFrameButton.UseVisualStyleBackColor = true;
-            this.copyFrameButton.Click += new System.EventHandler(this.copyFrameButton_Click);
-            // 
             // layerPreview1
             // 
             this.layerPreview1.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -184,12 +185,25 @@
             this.animationPreview1.Size = new System.Drawing.Size(300, 300);
             this.animationPreview1.TabIndex = 0;
             // 
+            // deleteButton
+            // 
+            this.deleteButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("deleteButton.BackgroundImage")));
+            this.deleteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.deleteButton.Location = new System.Drawing.Point(402, 468);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(30, 30);
+            this.deleteButton.TabIndex = 14;
+            this.animationToolTips.SetToolTip(this.deleteButton, "Delete selected frame");
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
             // AnimationPane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GrayText;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.copyFrameButton);
             this.Controls.Add(this.layerPreview1);
             this.Controls.Add(this.framePreview1);
@@ -226,5 +240,6 @@
         private FramePreview framePreview1;
         private LayerPreview layerPreview1;
         private System.Windows.Forms.Button copyFrameButton;
+        private System.Windows.Forms.Button deleteButton;
     }
 }

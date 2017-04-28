@@ -93,6 +93,7 @@
             this.Name = "MainWindow";
             this.Text = "PixelFlow";
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

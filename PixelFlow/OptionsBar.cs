@@ -37,8 +37,8 @@ namespace PixelFlow
 
         private void zoomPercent_ValueChanged(object sender, EventArgs e)
         {
-            
-            MainWindow.Instance.GetDrawPane().SetScale((int)zoomPercent.Value);
+            if (MainWindow.Instance.GetCurrentFrameIndex() > -1)
+                MainWindow.Instance.GetDrawPane().SetScale((int)zoomPercent.Value);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,6 +83,12 @@ namespace PixelFlow
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             redoButton_Click(sender, e);
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewProjectControl npc = new NewProjectControl();
+            DialogueForm dialogue = new DialogueForm(npc, "New");
         }
     }
 }
