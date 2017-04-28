@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="DrawPaneUtilitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolTests.cs" />
     <Compile Include="UtilitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>

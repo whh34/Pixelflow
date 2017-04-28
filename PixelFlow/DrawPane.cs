@@ -82,22 +82,20 @@ namespace PixelFlow
         public void DisplayImage(Bitmap newImage)
         {
             Graphics g = this.CreateGraphics();
+            if (g == null)
+                return;
+
             g.DrawImage(newImage, 0, 0, newImage.Width, newImage.Height);
         }
 
         public void DisplayImage()
         {
             Graphics g = CreateGraphics();
+            if (g == null)
+                return;
+
             g.DrawImage(Grid.DisplayMap, 0, 0, Grid.DisplayMap.Width, Grid.DisplayMap.Height);
             drawSelection();
-            /*for (int y = 0; y < size.Height; y++)
-            {
-                g.DrawLine(new Pen(Color.FromArgb(0x80, 0x80, 0x80, 0x80)), new Point(0, y * scale), new Point(Size.Width, y * scale));
-            }
-            for (int x = 0; x < size.Width; x++)
-            {
-                g.DrawLine(new Pen(Color.FromArgb(0x80, 0x80, 0x80, 0x80)), new Point(x * scale, 0), new Point(x * scale, Size.Height));
-            }*/
            
             int index = MainWindow.Instance.GetCurrentFrameIndex();
             MainWindow.Instance.GetAnimationPane().GetFramePreview().GetPreviewButton(index).UpdatePreviewImage();
