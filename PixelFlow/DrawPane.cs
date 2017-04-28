@@ -253,7 +253,15 @@ namespace PixelFlow
         {
 
             dragable = true;
-            string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            string tool;
+            if (sender is string)
+            {
+                tool = (string)sender;
+            }
+            else
+            {
+                tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            }
 
             if (e.Button == MouseButtons.Left)
             {
@@ -311,7 +319,15 @@ namespace PixelFlow
         public void DrawPane_MouseMove(object sender, MouseEventArgs e)
         {
 
-            string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            string tool;
+            if (sender is string)
+            {
+                tool = (string)sender;
+            }
+            else
+            {
+                tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            }
 
             if (tool == "pencil" && NoHotkeysPressed())
             {
@@ -357,7 +373,16 @@ namespace PixelFlow
 
         public void DrawPane_MouseUp(object sender, MouseEventArgs e)
         {
-            string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            string tool;
+            if (sender is string)
+            {
+                tool = (string) sender;
+            }
+            else
+            {
+                tool = MainWindow.Instance.GetToolbar().GetActiveTool();
+            }
+            
 
             if (tool == "pencil" && NoHotkeysPressed())
             {

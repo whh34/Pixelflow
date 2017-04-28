@@ -11,16 +11,14 @@ using static NUnit.Framework.Assert;
 
 namespace Tests
 {
+    
     [TestFixture]
     public class ToolTests
     {
         private DrawPane sPane, mPane, lPane, rPane;
-        private MainWindow mainWindow;
         [SetUp]
         public void Init()
         {
-            mainWindow = new MainWindow();
-            mainWindow.Hide();
             sPane = new DrawPane(1, 1, 1);
             mPane = new DrawPane(32, 32, 1);
             lPane = new DrawPane(1024, 1024, 1);
@@ -36,12 +34,11 @@ namespace Tests
         [Test]
         public void PencilTest()
         {
-            mainWindow.GetToolbar().SetActiveTool("pencil");
             
-            sPane.DrawPane_MouseDown(null, new MouseEventArgs(MouseButtons.Left, 1, 1, 1, 0));
-            mPane.DrawPane_MouseDown(null, new MouseEventArgs(MouseButtons.Left, 1, 16, 16, 0));
-            lPane.DrawPane_MouseDown(null, new MouseEventArgs(MouseButtons.Left, 1, 1024, 1024, 0));
-            rPane.DrawPane_MouseDown(null, new MouseEventArgs(MouseButtons.Left, 1, 8, 25, 0));
+            sPane.DrawPane_MouseDown("pencil", new MouseEventArgs(MouseButtons.Left, 1, 1, 1, 0));
+            mPane.DrawPane_MouseDown("pencil", new MouseEventArgs(MouseButtons.Left, 1, 16, 16, 0));
+            lPane.DrawPane_MouseDown("pencil", new MouseEventArgs(MouseButtons.Left, 1, 1024, 1024, 0));
+            rPane.DrawPane_MouseDown("pencil", new MouseEventArgs(MouseButtons.Left, 1, 8, 25, 0));
             AreEqual(sPane.GetPixel(1, 1), Color.Black);
             AreEqual(mPane.GetPixel(16, 16), Color.Black);
             AreEqual(lPane.GetPixel(1024, 1024), Color.Black);
