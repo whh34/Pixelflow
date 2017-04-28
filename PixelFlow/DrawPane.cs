@@ -29,7 +29,7 @@ namespace PixelFlow
         private int primaryAlpha = 255;
         private int secondaryAlpha = 255;
         private int lineThickness = 1;
-        private int scale = 10;
+        private int scale;
         private Size size;
         private Rectangle selectedRegion;
         private DrawingGrid.GridCell[,] tempClipboard;
@@ -39,52 +39,12 @@ namespace PixelFlow
 
         public int frame = 1; // the frame of the animation this will act as
 
-        public DrawPane()
-        {
-            InitializeComponent();
-            size = new Size(32, 32);
 
-            Grid = new DrawingGrid(size.Width, size.Height, scale);
-            this.Size = new Size(size.Width * scale, size.Height * scale);
+        public DrawPane(int width, int height, int scale) : this(new DrawingGrid(width, height, scale)) { }
 
-            frame = 1;
+        public DrawPane() : this(32, 32, 10) { }
 
-            //Set the selected region to be the entire image
-            selectedRegion = new Rectangle(-1, -1, Grid.size.Width + 1, Grid.size.Height + 1);
-
-            history = new List<Bitmap>();
-            history.Add((Bitmap)Grid.DisplayMap.Clone());
-        }
-
-        public DrawPane(int width, int height, int scale)
-        {
-            InitializeComponent();
-            size = new Size(width, height);
-            this.scale = scale;
-
-            Grid = new DrawingGrid(size.Width, size.Height, scale);
-            this.Size = new Size(size.Width * scale, size.Height * scale);
-
-            frame = 1;
-
-            history = new List<Bitmap>();
-            history.Add((Bitmap)Grid.DisplayMap.Clone());
-        }
-
-        public DrawPane(Size nativeScale, int scale)
-        {
-            InitializeComponent();
-            size = new Size(nativeScale.Width, nativeScale.Height);
-
-            Grid = new DrawingGrid(nativeScale.Width, nativeScale.Height, scale);
-            this.Size = new Size(nativeScale.Width * scale, nativeScale.Height * scale);
-            this.scale = scale;
-
-            frame = 1;
-
-            history = new List<Bitmap>();
-            history.Add((Bitmap)Grid.DisplayMap.Clone());
-        }
+        public DrawPane(Size nativeScale, int scale) : this(nativeScale.Width, nativeScale.Height, scale) { }
 
         public DrawPane(DrawingGrid grid)
         {
@@ -288,7 +248,7 @@ namespace PixelFlow
             return !keysDown;
         }
 
-        private void DrawPane_MouseDown(object sender, MouseEventArgs e)
+        public void DrawPane_MouseDown(object sender, MouseEventArgs e)
         {
 
             dragable = true;
@@ -347,7 +307,7 @@ namespace PixelFlow
             }
         }
 
-        private void DrawPane_MouseMove(object sender, MouseEventArgs e)
+        public void DrawPane_MouseMove(object sender, MouseEventArgs e)
         {
 
             string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
@@ -394,7 +354,7 @@ namespace PixelFlow
             }
         }
 
-        private void DrawPane_MouseUp(object sender, MouseEventArgs e)
+        public void DrawPane_MouseUp(object sender, MouseEventArgs e)
         {
             string tool = MainWindow.Instance.GetToolbar().GetActiveTool();
 

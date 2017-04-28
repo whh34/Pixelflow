@@ -34,6 +34,11 @@ namespace PixelFlow
             return this.activeTool;
         }
 
+        public void SetActiveTool(string tool)
+        {
+            this.activeTool = tool;
+        }
+
         /*
          * Allows the setting of the primary color through a color dialog
          * Passes the color information to the DrawPane
